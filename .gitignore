@@ -35,5 +35,3 @@
 *.elf
 *.hex
 *.map
-*.cogui
-*.coproj
