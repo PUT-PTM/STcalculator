@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+
+# CooCox files
+*.pbxproj
+*.xml
+*.bin
+*.elf
+*.hex
+*.map
