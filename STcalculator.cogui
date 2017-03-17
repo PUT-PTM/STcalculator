@@ -83,7 +83,7 @@
 <fastViewBars>
 <fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@163c061" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.2982456"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.2972973"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
