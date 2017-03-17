@@ -4,8 +4,8 @@
 #include "stm32f4xx_tim.h"
 #include "stm32f4xx_exti.h"
 #include "misc.h"
-#include "OurOwnFunctions.h"
 #include "stm32f4xx_syscfg.h"
+#include "OurOwnFunctions.h"
 
 int main(void)
 {

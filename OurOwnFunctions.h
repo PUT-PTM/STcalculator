@@ -497,8 +497,9 @@ void nkonf_PWM_i_diody_niebieskiej_PD15_dla_TIM4_CH4(uint32_t period, int duty)
 	TIM4->CCR4=duty*(period+1)/100; //ten rejestr mozna zmieniac dynamicznie w programie
 }
 
+// znacznik - to tutaj, 2 warianty argumentow funkcji - oba generuja jakies warningi
 //void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t GPIOy, uint8_t EXTI_PinSourcex)
-void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, GPIO_TypeDef* GPIOy, uint8_t EXTI_PinSourcex) //stara wersja powodowala error
+void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, GPIO_TypeDef* GPIOy, uint8_t EXTI_PinSourcex)
 {//dziala
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);//uruchomiæ zasilanie systemu przerwañ
 	
@@ -516,8 +517,34 @@ void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, GPIO_TypeDef* GPIOy, ui
 	EXTI_InitStruct. EXTI_LineCmd = ENABLE;// uruchom dan¹ liniê przerwañ
 	EXTI_Init(&EXTI_InitStruct);// zapisz strukturê konfiguracyjn¹ przerwañ zewnêtrznych do rejestrów
 	
+	uint8_t EXTI_PortSourceGPIOy;
+	if(GPIOy == GPIOA)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOA;
+	}
+	else if(GPIOy == GPIOB)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOB;
+	}
+	else if(GPIOy == GPIOC)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOC;
+	}
+	else if(GPIOy == GPIOD)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOD;
+	}
+	else if(GPIOy == GPIOE)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOE;
+	}
+	else if(GPIOy == GPIOF)
+	{
+		EXTI_PortSourceGPIOy = EXTI_PortSourceGPIOF;
+	}
+
 	// pod³¹czenie danego pinu portu do kontrolera przerwañ
-	SYSCFG_EXTILineConfig(GPIOy, EXTI_PinSourcex);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOy, EXTI_PinSourcex);
 }
 
 /*
