@@ -258,8 +258,7 @@ void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSource
 	EXTI_InitStruct. EXTI_Trigger = EXTI_Trigger_Rising;// wybór zbocza, na które zareaguje przerwanie
 	EXTI_InitStruct. EXTI_LineCmd = ENABLE;// uruchom dan¹ liniê przerwañ
 	EXTI_Init(&EXTI_InitStruct);// zapisz strukturê konfiguracyjn¹ przerwañ zewnêtrznych do rejestrów
-	
-	// pod³¹czenie danego pinu portu do kontrolera przerwañ
+
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOx, EXTI_PinSourcex);
 }
 
