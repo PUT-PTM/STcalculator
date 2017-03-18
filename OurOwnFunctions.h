@@ -95,19 +95,6 @@ uint16_t dioda_pomaranczowa = GPIO_Pin_13;
 uint16_t dioda_czerwona = GPIO_Pin_14;
 uint16_t dioda_niebieska = GPIO_Pin_15;
 
-//do generowania sinusa
-float alfa = 0; //k¹t <0;360>
-float sinusek = 0;//wynik f-cji sinus <-1;1>
-int digitAmplituda = 0;//zmienna w programie
-int digital_napiecie_sinus = 0;//zmienna w programie
-int ADC_Resultsinus = 0;//zmienna w programie
-
-//do generowania pily
-float liczbaalfapily = 0.0;
-int digitAmplitudapily = 0;
-int digital_Napieciepily = 0;
-int ADC_Resultpila=0;
-
 void nkonf_diod_wbudowanych()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
@@ -132,7 +119,6 @@ void nkonf_klawiatury_8_klawiszowej()
 	GPIO_klawiatura.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOE, &GPIO_klawiatura);
 }
-
 
 void nkonf_wbudowanego_przycisku()
 {//dziala
@@ -263,7 +249,6 @@ void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSource
 }
 
 /*
-
 void TIM3_IRQHandler ( void )
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
