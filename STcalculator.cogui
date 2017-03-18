@@ -4,8 +4,8 @@
 <window>
 <fastViewData fastViewLocation="1024">
 <orientation position="512" view="org.eclipse.debug.ui.ExpressionView"/>
-<orientation position="512" view="org.coocox.builder.ui.views.ProjectView"/>
 <orientation position="512" view="org.coocox.component.ui.ComponentView"/>
+<orientation position="512" view="org.coocox.builder.ui.views.ProjectView"/>
 <orientation position="512" view="org.coocox.codebugger.trace.ui.traceview"/>
 <orientation position="512" view="org.eclipse.debug.ui.DebugView"/>
 <orientation position="512" view="org.eclipse.ui.console.ConsoleView"/>
@@ -27,11 +27,11 @@
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/STcalculator/main.c" title="main.c" tooltip="D:/STcalculator/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1578" selectionTopPixel="556"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="471" selectionTopPixel="42"/>
 </editor>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" partName="OurOwnFunctions.h" path="D:/STcalculator/OurOwnFunctions.h" title="OurOwnFunctions.h" tooltip="D:/STcalculator/OurOwnFunctions.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/OurOwnFunctions.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="353" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9591" selectionTopPixel="4283"/>
 </editor>
 </editors>
 <views>
@@ -159,9 +159,9 @@
 </editor>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h"/>
 </editors>
-<item historyLabel="welcome" index="0"/>
-<item historyLabel="Repository" index="1"/>
 <item historyLabel="welcome" index="0"/>
 <item historyLabel="Repository" index="1"/>
 <item historyLabel="Repository" index="2"/>
@@ -275,8 +275,32 @@
 <item historyLabel="main.c" index="13">
 <position info="not_deleted" x="162" y="22"/>
 </item>
-<item active="true" historyLabel="OurOwnFunctions.h" index="14">
+<item historyLabel="OurOwnFunctions.h" index="14">
 <position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="1380" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="8301" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="840" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9550" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_syscfg.h" index="16">
+<position info="not_deleted" x="6631" y="75"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9580" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="471" y="0"/>
+</item>
+<item active="true" historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9580" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -285,17 +309,20 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" tooltip="STcalculator/OurOwnFunctions.h">
-<persistable path="/STcalculator/OurOwnFunctions.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_syscfg.h" tooltip="STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h">
+<persistable path="/STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="STcalculator/cmsis_lib/include/stm32f4xx_gpio.h">
+<persistable path="/STcalculator/cmsis_lib/include/stm32f4xx_gpio.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="STcalculator/cmsis_boot/stm32f4xx.h">
 <persistable path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_syscfg.h" tooltip="STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h">
-<persistable path="/STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="STcalculator/cmsis_boot/startup/startup_stm32f4xx.c">
 <persistable path="/STcalculator/cmsis_boot/startup/startup_stm32f4xx.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" tooltip="STcalculator/OurOwnFunctions.h">
+<persistable path="/STcalculator/OurOwnFunctions.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="n126803.h" tooltip="STcalculator/n126803.h">
 <persistable path="/STcalculator/n126803.h"/>
@@ -324,9 +351,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_conf.h" tooltip="p3/cmsis_boot/stm32f4xx_conf.h">
 <persistable path="/p3/cmsis_boot/stm32f4xx_conf.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="p3/cmsis_boot/startup/startup_stm32f4xx.c">
-<persistable path="/p3/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="p3/cmsis_lib/include/stm32f4xx_gpio.h">
 <persistable path="/p3/cmsis_lib/include/stm32f4xx_gpio.h"/>
