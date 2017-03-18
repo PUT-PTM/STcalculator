@@ -132,29 +132,7 @@ void nkonf_klawiatury_8_klawiszowej()
 	GPIO_klawiatura.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOE, &GPIO_klawiatura);
 }
-void nkonf_wyswietlacza_LED()
-{//dziala
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
-	GPIO_InitTypeDef GPIO_wyswietlacz_Port_B;
-	//piny wyjsciowe do zegara
-	GPIO_wyswietlacz_Port_B.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
-	GPIO_wyswietlacz_Port_B.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_wyswietlacz_Port_B.GPIO_OType = GPIO_OType_PP;
-	GPIO_wyswietlacz_Port_B.GPIO_Speed = GPIO_Speed_100MHz;
-	//GPIO_wyswietlacz_Port_B.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOB, &GPIO_wyswietlacz_Port_B);
-
-	GPIO_InitTypeDef GPIO_wyswietlacz_Port_D;
-	//piny wyjsciowe do zegara
-	GPIO_wyswietlacz_Port_D.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
-	GPIO_wyswietlacz_Port_D.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_wyswietlacz_Port_D.GPIO_OType = GPIO_OType_PP;
-	GPIO_wyswietlacz_Port_D.GPIO_Speed = GPIO_Speed_100MHz;
-	//GPIO_wyswietlacz_Port_D.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOD, &GPIO_wyswietlacz_Port_D);
-}
 
 void nkonf_wbudowanego_przycisku()
 {//dziala
@@ -263,6 +241,7 @@ void nkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);
 }
 
+<<<<<<< HEAD
 void nkonf_PWM_i_PA3_dla_TIM2_CH4(uint32_t period, int duty)
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
@@ -500,6 +479,9 @@ void nkonf_PWM_i_diody_niebieskiej_PD15_dla_TIM4_CH4(uint32_t period, int duty)
 // znacznik - to tutaj, 2 warianty argumentow funkcji - oba generuja jakies warningi
 //void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t GPIOy, uint8_t EXTI_PinSourcex)
 void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, GPIO_TypeDef* GPIOy, uint8_t EXTI_PinSourcex)
+=======
+void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex) //stara wersja powodowala error
+>>>>>>> refs/remotes/origin/Natalia's-Branch
 {//dziala
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);//uruchomiæ zasilanie systemu przerwañ
 	
@@ -544,45 +526,14 @@ void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, GPIO_TypeDef* GPIOy, ui
 	}
 
 	// pod³¹czenie danego pinu portu do kontrolera przerwañ
+<<<<<<< HEAD
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOy, EXTI_PinSourcex);
+=======
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOx, EXTI_PinSourcex);
+>>>>>>> refs/remotes/origin/Natalia's-Branch
 }
 
 /*
-void njeden_przycisk_zalaczanie_diod_po_koleifor(GPIO_TypeDef *port1, GPIO_InitTypeDef *pin1, GPIO_TypeDef *port2, GPIO_InitTypeDef *pin2, GPIO_TypeDef *port3, GPIO_InitTypeDef *pin3, GPIO_TypeDef *port4, GPIO_InitTypeDef *pin4, GPIO_TypeDef *port5, GPIO_InitTypeDef *pin5)
-{//do tego dobrze by bylo miec timer i przerwania od stykow
-	int t2 = 0;
-	int t1 = 0;
-	int number = 0;
-	for(;;)
-	{
-		t2=t1;
-		t1 = GPIO_ReadInputDataBit(port1, pin1);
-		if ( t2 == 0 && t1 == 1)
-			number+=1;
-		if(number%4 == 0)
-		{
-			GPIO_ResetBits(port5, pin5);
-			GPIO_SetBits(port2, pin2);
-		}
-		else if(number%4 == 1)
-		{
-			GPIO_ResetBits(port2, pin2);
-			GPIO_SetBits(port3, pin3);
-		}
-		else if(number%4 == 2)
-		{
-			GPIO_ResetBits(port3, pin3);
-			GPIO_SetBits(port4, pin4);
-		}
-		else if(number%4 == 3)
-		{
-			GPIO_ResetBits(port4, pin4);
-			GPIO_SetBits(port5, pin5);
-		}
-		else if(number >100)
-			number -= 80;
-	}
-}
 
 void TIM3_IRQHandler ( void )
 {

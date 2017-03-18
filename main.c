@@ -26,7 +26,7 @@ int main(void)
 	nkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
 	nkonf_wbudowanego_przycisku();
-	nkonf_EXTI(EXTI0_IRQn, EXTI_Line0, GPIOA, EXTI_PinSource0);
+	nkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOA, EXTI_PinSource0);
 	while(1)
 	{}
 }

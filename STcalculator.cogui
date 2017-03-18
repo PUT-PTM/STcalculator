@@ -27,11 +27,19 @@
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/STcalculator/main.c" title="main.c" tooltip="D:/STcalculator/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/main.c"/>
+<<<<<<< HEAD
 <editorState selectionHorizontalPixel="0" selectionLength="6" selectionOffset="182" selectionTopPixel="0"/>
 </editor>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" partName="OurOwnFunctions.h" path="D:/STcalculator/OurOwnFunctions.h" title="OurOwnFunctions.h" tooltip="D:/STcalculator/OurOwnFunctions.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/OurOwnFunctions.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="516" selectionOffset="21205" selectionTopPixel="8765"/>
+=======
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="471" selectionTopPixel="42"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" partName="OurOwnFunctions.h" path="D:/STcalculator/OurOwnFunctions.h" title="OurOwnFunctions.h" tooltip="D:/STcalculator/OurOwnFunctions.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/OurOwnFunctions.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9591" selectionTopPixel="4283"/>
+>>>>>>> refs/remotes/origin/Natalia's-Branch
 </editor>
 </editors>
 <views>
@@ -147,12 +155,46 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
+<<<<<<< HEAD
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/startup/startup_stm32f4xx.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 </editors>
 <item historyLabel="n126803.h" index="1">
+=======
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_lib/include/stm32f4xx_syscfg.h"/>
+</editors>
+<item historyLabel="welcome" index="0"/>
+<item historyLabel="Repository" index="1"/>
+<item historyLabel="Repository" index="2"/>
+<item historyLabel="Repository" index="3"/>
+<item historyLabel="main.c" index="4">
+<position/>
+</item>
+<item historyLabel="n126803.h" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="4">
+<position/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="n126803.h" index="5">
+<position info="not_deleted" x="2495" y="32"/>
+</item>
+<item historyLabel="main.c" index="4">
+<position info="not_deleted" x="383" y="0"/>
+</item>
+<item historyLabel="n126803.h" index="5">
+<position info="not_deleted" x="38341" y="0"/>
+</item>
+<item historyLabel="main.c" index="4">
+<position info="not_deleted" x="383" y="0"/>
+</item>
+<item historyLabel="n126803.h" index="5">
+>>>>>>> refs/remotes/origin/Natalia's-Branch
 <position info="not_deleted" x="38148" y="58"/>
 </item>
 <item historyLabel="n126803.h" index="1">
@@ -237,6 +279,7 @@
 <item historyLabel="main.c" index="8">
 <position info="not_deleted" x="162" y="22"/>
 </item>
+<<<<<<< HEAD
 <item historyLabel="OurOwnFunctions.h" index="9">
 <position info="not_deleted" x="0" y="0"/>
 </item>
@@ -299,6 +342,34 @@
 </item>
 <item active="true" historyLabel="OurOwnFunctions.h" index="14">
 <position info="not_deleted" x="21236" y="10"/>
+=======
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="1380" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="8301" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="840" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9550" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_syscfg.h" index="16">
+<position info="not_deleted" x="6631" y="75"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9580" y="0"/>
+</item>
+<item historyLabel="main.c" index="15">
+<position info="not_deleted" x="471" y="0"/>
+</item>
+<item active="true" historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="9580" y="0"/>
+>>>>>>> refs/remotes/origin/Natalia's-Branch
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
