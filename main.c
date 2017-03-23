@@ -16,7 +16,7 @@ int main(void)
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-
+//
 	nkonf_diod_wbudowanych();
 
 	nkonf_timera(TIM2, 8399, 9999);//swieci 1s
