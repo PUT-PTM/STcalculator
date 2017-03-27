@@ -28,10 +28,6 @@ int main(void)
 	TIM_TimeBaseInitTypeDef TIM_Timerx;// struktura timera
 	TIM_Cmd(TIMx, ENABLE);// komenda uruchamiania timera
 
-	//ADC
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1 , ENABLE); // zegar dla modu³u ADC1
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2 , ENABLE); // zegar dla modu³u ADC2
-
 	auto counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
 	if (TIM_GetFlagStatus(TIMx, TIM_FLAG_Update ))
 	{
@@ -69,19 +65,19 @@ PE2, 4-6
 PE7-14 klawiatura 8-przyciskowa
 PE15
 
-zegar 8 segmentowy
-PB3 - h
-PB4 - 4
-PB5 - 3
-PB6 - 2
-PB7 - 1
-PD1 - a
-PD2 - b
-PD3 - c
-PD4 - d
-PD5 - e
-PD6 - f
-PD7 - g
+wolne piny
+PB3 - 
+PB4 - 
+PB5 - 
+PB6 - 
+PB7 - 
+PD1 - 
+PD2 - 
+PD3 - 
+PD4 - 
+PD5 - 
+PD6 - 
+PD7 - 
 
 if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
 {
