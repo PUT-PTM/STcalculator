@@ -207,16 +207,12 @@ void stmkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 	// ustawienie trybu pracy priorytetów przerwañ
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	NVIC_InitTypeDef NVIC_InitStruct;
-	// numer przerwania
-	NVIC_InitStruct. NVIC_IRQChannel = TIMx_IRQn;//w stm32f4xx.h on sam znajduje numery
-	// priorytet g³ówny
-	NVIC_InitStruct. NVIC_IRQChannelPreemptionPriority = 0x00;
-	// subpriorytet
-	NVIC_InitStruct. NVIC_IRQChannelSubPriority = 0x00;
-	// uruchom dany kana³
-	NVIC_InitStruct. NVIC_IRQChannelCmd = ENABLE;
-	// zapisz wype³nion¹ strukturê do rejestrów
-	NVIC_Init(&NVIC_InitStruct);
+
+	NVIC_InitStruct. NVIC_IRQChannel = TIMx_IRQn;// numer przerwania//w stm32f4xx.h on sam znajduje numery
+	NVIC_InitStruct. NVIC_IRQChannelPreemptionPriority = 0x00;// priorytet g³ówny
+	NVIC_InitStruct. NVIC_IRQChannelSubPriority = 0x00;// subpriorytet
+	NVIC_InitStruct. NVIC_IRQChannelCmd = ENABLE;// uruchom dany kana³
+	NVIC_Init(&NVIC_InitStruct);// zapisz wype³nion¹ strukturê do rejestrów
 
 	// wyczyszczenie przerwania od timera (wyst¹pi³o przy konfiguracji timera)
 	TIM_ClearITPendingBit(TIMx, TIM_IT_Update);
@@ -224,7 +220,7 @@ void stmkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);
 }
 
-void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex) //stara wersja powodowala error
+void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
 {//dziala
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);//uruchomiæ zasilanie systemu przerwañ
 	
