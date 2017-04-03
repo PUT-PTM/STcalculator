@@ -79,6 +79,7 @@ PD5 -
 PD6 - 
 PD7 - 
 
+
 if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
 {
 	GPIO_SetBits(GPIOD, GPIO_Pin_x);
@@ -91,7 +92,7 @@ uint16_t dioda_pomaranczowa = GPIO_Pin_13;
 uint16_t dioda_czerwona = GPIO_Pin_14;
 uint16_t dioda_niebieska = GPIO_Pin_15;
 
-void nkonf_diod_wbudowanych()
+void stmkonf_diod_wbudowanych()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 	GPIO_InitTypeDef GPIO_Diody;
@@ -104,7 +105,7 @@ void nkonf_diod_wbudowanych()
 	GPIO_Init(GPIOD, &GPIO_Diody);
 }
 
-void nkonf_klawiatury_8_klawiszowej()
+void stmkonf_klawiatury_8_klawiszowej()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 	GPIO_InitTypeDef GPIO_klawiatura;
@@ -116,7 +117,7 @@ void nkonf_klawiatury_8_klawiszowej()
 	GPIO_Init(GPIOE, &GPIO_klawiatura);
 }
 
-void nkonf_wbudowanego_przycisku()
+void stmkonf_wbudowanego_przycisku()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	GPIO_InitTypeDef GPIO_przycisk;
@@ -128,7 +129,7 @@ void nkonf_wbudowanego_przycisku()
 	GPIO_Init(GPIOA, &GPIO_przycisk);
 }
 
-void nkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
+void stmkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 {//jeszcze nie przetestowane
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
@@ -145,7 +146,7 @@ void nkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 	GPIO_Init(GPIOx, &GPIO_struct);
 }
 
-void nkonf_pinu_jako_wyjscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
+void stmkonf_pinu_jako_wyjscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 {//jeszcze nie przetestowane
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
@@ -162,7 +163,7 @@ void nkonf_pinu_jako_wyjscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 	GPIO_Init(GPIOx, &GPIO_struct);
 }
 
-void nkonf_timera(TIM_TypeDef* TIMx, uint16_t prescaler, uint32_t period)
+void stmkonf_timera(TIM_TypeDef* TIMx, uint16_t prescaler, uint32_t period)
 {//dziala
 	if(TIMx == TIM2)
 	{
@@ -191,17 +192,17 @@ void nkonf_timera(TIM_TypeDef* TIMx, uint16_t prescaler, uint32_t period)
 	//int licznik = TIM3->CNT; //TIM3->CNT jest powiazany z periodem!!!
 }
 
-void nwlacz_timer(TIM_TypeDef* TIMx)
+void stmwlacz_timer(TIM_TypeDef* TIMx)
 {//dziala
 	TIM_Cmd(TIMx, ENABLE);  // komenda uruchamiania timera
 }
 
-void nwylacz_timer(TIM_TypeDef* TIMx)
+void stmwylacz_timer(TIM_TypeDef* TIMx)
 {//dziala
 	TIM_Cmd(TIMx, DISABLE);  // komenda uruchamiania timera
 }
 
-void nkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
+void stmkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 {//dziala
 	// ustawienie trybu pracy priorytetów przerwañ
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
@@ -223,7 +224,7 @@ void nkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);
 }
 
-void nkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex) //stara wersja powodowala error
+void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex) //stara wersja powodowala error
 {//dziala
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);//uruchomiæ zasilanie systemu przerwañ
 	
