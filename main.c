@@ -29,18 +29,19 @@ int main(void)
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
-	stmkonf_pinu_jako_wejscie(GPIOB, pin1 | pin2);
-	stmkonf_pinu_jako_wejscie(GPIOD, pin3 | pin4);
-	stmkonf_pinu_jako_wyjscie(GPIOD, pin5 | pin6);
-	stmkonf_pinu_jako_wyjscie(GPIOC, pin7);
-	stmkonf_pinu_jako_wyjscie(GPIOA, pin8);
+	stmkonf_pinu_jako_wyjscie(GPIOB, pin1 | pin2);
+	stmkonf_pinu_jako_wyjscie(GPIOD, pin3 | pin4);
+	stmkonf_pinu_jako_wejscie(GPIOD, pin5 | pin6);
+	stmkonf_pinu_jako_wejscie(GPIOC, pin7);
+	stmkonf_pinu_jako_wejscie(GPIOA, pin8);
 
-	stmkonf_timera(TIM2, 8399, 9999);//swieci dioda 1s
-	stmkonf_NVIC_timera(TIM2, TIM2_IRQn);
 
 	stmkonf_timera(TIM3, 8399, 4999);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
+
+	stmkonf_timera(TIM2, 8399, 9999);//swieci dioda 1s
+	stmkonf_NVIC_timera(TIM2, TIM2_IRQn);
 
 	stmkonf_timera(TIM5, 8399, 1249);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
@@ -48,8 +49,9 @@ int main(void)
 	stmkonf_diod_wbudowanych();
 	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin6
-	stmkonf_EXTI(EXTI15_10_IRQn, EXTI_Line12, EXTI_PortSourceGPIOC, EXTI_PinSource12);//przerwanie czekajace na dane z pin7
-	stmkonf_EXTI(EXTI9_5_IRQn, EXTI_Line10, EXTI_PortSourceGPIOA, EXTI_PinSource10);//przerwanie czekajace na dane z pin8
+	/*tu jest problem - program przestaje dzialac po odkomentowaniu tejze linijki z gwiazdka
+	 * stmkonf_EXTI(EXTI15_10_IRQn, EXTI_Line12, EXTI_PortSourceGPIOC, EXTI_PinSource12);//przerwanie czekajace na dane z pin7
+	stmkonf_EXTI(EXTI9_5_IRQn, EXTI_Line10, EXTI_PortSourceGPIOA, EXTI_PinSource10);//przerwanie czekajace na dane z pin8*/
 	while(1)
 	{}
 }
@@ -63,6 +65,7 @@ void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	}
 }
+
 void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// timer do redukcji drgan stykow
 {
 	znacznik =5;
@@ -75,7 +78,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 		}
 		else
 		{
-			TIM_ClearITPendingBit(TIM2, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
+			//TIM_ClearITPendingBit(TIM2, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 			EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 			stmwlacz_timer(TIM3);//z powrotem wlacza przelaczanie zasilania na piny
 		}
@@ -132,7 +135,6 @@ void TIM3_IRQHandler ( void )
 			break;
 		}
 		}
-		TIM3->CNT=0;//zerujemy timer zeby ruszyl od zera
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 	}
 }
