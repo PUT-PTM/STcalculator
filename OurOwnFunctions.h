@@ -64,19 +64,19 @@ PE2, 4-6
 PE7-14 klawiatura 8-przyciskowa
 PE15
 
-wolne piny
+piny
 PB3 - 
-PB4 - 
+PB4 - pin2 klawiatury
 PB5 - 
-PB6 - 
+PB6 - pin1 klawiatury
 PB7 - 
 PD1 - 
 PD2 - 
-PD3 - 
+PD3 - pin5 klawiatury przerwanie
 PD4 - 
-PD5 - 
-PD6 - 
-PD7 - 
+PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
+PD6 - pin4 klawiatury
+PD7 - pin3 klawiatury
 
 
 if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
@@ -142,6 +142,23 @@ void stmkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 	//GPIO_struct.GPIO_OType = GPIO_OType_PP;//tryb jesli wyjscie
 	GPIO_struct.GPIO_Speed = GPIO_Speed_100MHz; // max prekosc przelaczania wyprowadzen
 	GPIO_struct.GPIO_PuPd = GPIO_PuPd_UP; // podciaganie vcc masa lub nic
+	GPIO_Init(GPIOx, &GPIO_struct);
+}
+
+void stmkonf_pinu_jako_wejscie_down(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
+{
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+
+	GPIO_InitTypeDef GPIO_struct;
+	GPIO_struct.GPIO_Pin = GPIO_Pin_x;
+	GPIO_struct.GPIO_Mode = GPIO_Mode_IN; // tryb dzialania
+	//GPIO_struct.GPIO_OType = GPIO_OType_PP;//tryb jesli wyjscie
+	GPIO_struct.GPIO_Speed = GPIO_Speed_100MHz; // max prekosc przelaczania wyprowadzen
+	GPIO_struct.GPIO_PuPd = GPIO_PuPd_DOWN; // podciaganie vcc masa lub nic
 	GPIO_Init(GPIOx, &GPIO_struct);
 }
 
