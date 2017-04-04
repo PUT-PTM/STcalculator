@@ -21,22 +21,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/STcalculator/main.c" title="main.c" tooltip="D:/STcalculator/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1840" selectionTopPixel="751"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4943" selectionTopPixel="2638"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" partName="OurOwnFunctions.h" path="D:/STcalculator/OurOwnFunctions.h" title="OurOwnFunctions.h" tooltip="D:/STcalculator/OurOwnFunctions.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/OurOwnFunctions.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7852" selectionTopPixel="3919"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" partName="stm32f4xx_rcc.c" path="D:/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c" title="stm32f4xx_rcc.c" tooltip="D:/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="6" selectionOffset="59612" selectionTopPixel="23426"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6213" selectionTopPixel="2721"/>
 </editor>
 </editors>
 <views>
@@ -44,9 +39,10 @@
 <viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
 <expanded>
 <element path="/STcalculator"/>
+<element path="/STcalculator/cmsis_boot"/>
 </expanded>
 <selection>
-<element path="/STcalculator/README.md"/>
+<element path="/STcalculator/cmsis_boot/system_stm32f4xx.c"/>
 </selection>
 </viewState>
 </view>
@@ -114,7 +110,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.coocox.builder.ui.exampleView" ratio="0.19402985" ratioLeft="130" ratioRight="540" relationship="2" relative="org.eclipse.ui.internal.ViewStack@9e6b83"/>
+<info part="org.coocox.builder.ui.exampleView" ratio="0.15820895" ratioLeft="106" ratioRight="564" relationship="2" relative="org.eclipse.ui.internal.ViewStack@9e6b83"/>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@a49c24" ratio="0.71273714" ratioLeft="263" ratioRight="106" relationship="2" relative="org.coocox.builder.ui.exampleView">
 <folder appearance="2" expanded="2">
 <page content="org.coocox.component.ui.Help" label="LabelNotFound"/>
@@ -140,8 +136,6 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/STcalculator/README.md"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/main.c"/>
@@ -151,129 +145,161 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/system_stm32f4xx.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 </editors>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="OurOwnFunctions.h" index="1">
-<position info="not_deleted" x="9647" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="OurOwnFunctions.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="README.md" index="3">
+<item historyLabel="README.md" index="1">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="502" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="455" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="2395" y="37"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="455" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1650" y="7"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="7746" y="7"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="422" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="2404" y="5"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2250" y="8"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="7647" y="2"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2250" y="8"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="2508" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="3294" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="6">
+<item historyLabel="OurOwnFunctions.h" index="4">
 <position info="not_deleted" x="7854" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1497" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="3195" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1846" y="120"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1148" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1622" y="10"/>
 </item>
-<item historyLabel="stm32f4xx.h" index="7">
+<item historyLabel="stm32f4xx.h" index="5">
 <position info="not_deleted" x="9561" y="12"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1622" y="10"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="8">
+<item historyLabel="OurOwnFunctions.h" index="6">
 <position info="not_deleted" x="5075" y="278"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="634" y="220"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="8">
+<item historyLabel="OurOwnFunctions.h" index="6">
 <position info="not_deleted" x="2432" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="634" y="220"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="3818" y="0"/>
 </item>
-<item historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="3735" y="33"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="9">
+<item historyLabel="OurOwnFunctions.h" index="7">
 <position info="not_deleted" x="7868" y="0"/>
 </item>
-<item historyLabel="stm32f4xx_rcc.c" index="10">
+<item historyLabel="stm32f4xx_rcc.c" index="8">
 <position info="not_deleted" x="52919" y="22"/>
 </item>
-<item historyLabel="stm32f4xx.h" index="11">
+<item historyLabel="stm32f4xx.h" index="9">
 <position info="not_deleted" x="9561" y="12"/>
 </item>
-<item historyLabel="stm32f4xx_rcc.c" index="10">
+<item historyLabel="stm32f4xx_rcc.c" index="8">
 <position info="not_deleted" x="59612" y="6"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="9">
+<item historyLabel="OurOwnFunctions.h" index="7">
 <position info="not_deleted" x="7852" y="0"/>
 </item>
-<item active="true" historyLabel="main.c" index="5">
+<item historyLabel="main.c" index="3">
 <position info="not_deleted" x="1522" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="10">
+<position info="not_deleted" x="7852" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_rcc.c" index="11">
+<position info="not_deleted" x="59612" y="6"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="10">
+<position info="not_deleted" x="8516" y="0"/>
+</item>
+<item historyLabel="main.c" index="3">
+<position info="not_deleted" x="1840" y="0"/>
+</item>
+<item historyLabel="stm32f4xx.h" index="12">
+<position info="not_deleted" x="3507" y="0"/>
+</item>
+<item historyLabel="system_stm32f4xx.c" index="13">
+<position info="not_deleted" x="21723" y="0"/>
+</item>
+<item historyLabel="stm32f4xx.h" index="12">
+<position info="not_deleted" x="3507" y="0"/>
+</item>
+<item historyLabel="main.c" index="3">
+<position info="not_deleted" x="2391" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="4215" y="0"/>
+</item>
+<item historyLabel="main.c" index="3">
+<position info="not_deleted" x="2225" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="4215" y="0"/>
+</item>
+<item historyLabel="main.c" index="3">
+<position info="not_deleted" x="2225" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="14">
+<position info="not_deleted" x="6213" y="0"/>
+</item>
+<item active="true" historyLabel="main.c" index="3">
+<position info="not_deleted" x="2225" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -282,11 +308,14 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" tooltip="STcalculator/cmsis_lib/source/stm32f4xx_rcc.c">
-<persistable path="/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" tooltip="STcalculator/cmsis_boot/system_stm32f4xx.c">
+<persistable path="/STcalculator/cmsis_boot/system_stm32f4xx.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="STcalculator/cmsis_boot/stm32f4xx.h">
 <persistable path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" tooltip="STcalculator/cmsis_lib/source/stm32f4xx_rcc.c">
+<persistable path="/STcalculator/cmsis_lib/source/stm32f4xx_rcc.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="README.md" tooltip="STcalculator/README.md">
 <persistable path="/STcalculator/README.md"/>
@@ -324,9 +353,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_conf.h" tooltip="p3/cmsis_boot/stm32f4xx_conf.h">
 <persistable path="/p3/cmsis_boot/stm32f4xx_conf.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="p3/cmsis_boot/startup/startup_stm32f4xx.c">
-<persistable path="/p3/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
 </mruList>
 </workbench>

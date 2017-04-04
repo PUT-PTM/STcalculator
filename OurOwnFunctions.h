@@ -25,7 +25,6 @@ int main(void)
 	TIM3 TIM4 do APB1
 	nie wiem jakie timery do APB2
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIMx, ENABLE );//podlaczenie timera do szyny - niezbedne do dzialania
-	TIM_TimeBaseInitTypeDef TIM_Timerx;// struktura timera
 	TIM_Cmd(TIMx, ENABLE);// komenda uruchamiania timera
 
 	auto counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
@@ -130,7 +129,7 @@ void stmkonf_wbudowanego_przycisku()
 }
 
 void stmkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
-{//jeszcze nie przetestowane
+{
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -147,7 +146,7 @@ void stmkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 }
 
 void stmkonf_pinu_jako_wyjscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
-{//jeszcze nie przetestowane
+{
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -214,10 +213,8 @@ void stmkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 	NVIC_InitStruct. NVIC_IRQChannelCmd = ENABLE;// uruchom dany kana³
 	NVIC_Init(&NVIC_InitStruct);// zapisz wype³nion¹ strukturê do rejestrów
 
-	// wyczyszczenie przerwania od timera (wyst¹pi³o przy konfiguracji timera)
-	TIM_ClearITPendingBit(TIMx, TIM_IT_Update);
-	// zezwolenie na przerwania od przepe³nienia dla timera
-	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);
+	TIM_ClearITPendingBit(TIMx, TIM_IT_Update);// wyczyszczenie przerwania od timera (wyst¹pi³o przy konfiguracji timera)
+	TIM_ITConfig(TIMx, TIM_IT_Update, ENABLE);// zezwolenie na przerwania od przepe³nienia dla timera
 }
 
 void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
