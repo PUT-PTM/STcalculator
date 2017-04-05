@@ -20,9 +20,7 @@ uint16_t pin2= GPIO_Pin_4;//B
 uint16_t pin1= GPIO_Pin_6;//B
 
 uint16_t numer_aktualnie_zasilanego_pinu = 0;
-uint16_t znacznik=0;
-
-uint8_t stan_pin5;
+char znak;
 
 int main(void)
 {
@@ -41,7 +39,7 @@ int main(void)
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin3);
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin4);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin5);
-	//stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
+	stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
 	//stmkonf_pinu_jako_wejscie_down(GPIOC, pin7);
 	//stmkonf_pinu_jako_wejscie_down(GPIOA, pin8);
 
@@ -54,18 +52,26 @@ int main(void)
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
 	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
-	//stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin6
+	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin6
 	/*tu jest problem - program przestaje dzialac po odkomentowaniu tejze linijki z gwiazdka
 	 * stmkonf_EXTI(EXTI15_10_IRQn, EXTI_Line12, EXTI_PortSourceGPIOC, EXTI_PinSource12);//przerwanie czekajace na dane z pin7
 	stmkonf_EXTI(EXTI9_5_IRQn, EXTI_Line10, EXTI_PortSourceGPIOA, EXTI_PinSource10);//przerwanie czekajace na dane z pin8*/
 	while(1)
-	{stan_pin5 = GPIO_ReadInputDataBit(GPIOD, pin5);}
+	{}
 }
 
 void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 {
-	znacznik =1;
 	if (EXTI_GetITStatus(EXTI_Line3) != RESET)
+	{
+		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
+		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
+	}
+}
+
+void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin5
+{
+	if (EXTI_GetITStatus(EXTI_Line1) != RESET)
 	{
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
@@ -74,7 +80,6 @@ void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 
 void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// timer do redukcji drgan stykow
 {
-	znacznik =5;
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
 		if(GPIO_ReadInputDataBit(GPIOD, pin5) != RESET)//rzad najnizszy
@@ -83,30 +88,56 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 			case 0:
 			{
-				GPIO_ToggleBits(GPIOD, dioda_czerwona);
+				znak = '*';
 				break;
 			}
 			case 1:
 			{
-				GPIO_ToggleBits(GPIOD, dioda_pomaranczowa);
+				znak = 'C';
 				break;
 			}
 			case 2:
 			{
-				GPIO_ToggleBits(GPIOD, dioda_zielona);
+				znak = '#';
 				break;
 			}
 			case 3:
 			{
-				GPIO_ToggleBits(GPIOD, dioda_niebieska);
+				znak = '0';
+				break;
+			}
+			}
+		}
+		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)//rzad najnizszy
+		{
+			switch(numer_aktualnie_zasilanego_pinu%4)
+			{
+			case 0:
+			{
+				znak = '7';
+				break;
+			}
+			case 1:
+			{
+				znak = 'C';
+				break;
+			}
+			case 2:
+			{
+				znak = '9';
+				break;
+			}
+			case 3:
+			{
+				znak = '8';
 				break;
 			}
 			}
 		}
 		stmwylacz_timer(TIM5);
-		//TIM5->CNT=0;
 		TIM_ClearITPendingBit(TIM5, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
 		stmwlacz_timer(TIM3);//z powrotem wlacza przelaczanie zasilania na piny
 	}
 }
@@ -115,7 +146,6 @@ void TIM3_IRQHandler ( void )
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
 	{
-		znacznik =3;
 		numer_aktualnie_zasilanego_pinu++;
 		switch(numer_aktualnie_zasilanego_pinu%4)
 		{
