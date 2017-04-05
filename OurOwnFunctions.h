@@ -103,7 +103,7 @@ void stmkonf_diod_wbudowanych()
 	GPIO_Diody.GPIO_PuPd = GPIO_PuPd_NOPULL; // podciaganie vcc masa lub tu nic
 	GPIO_Init(GPIOD, &GPIO_Diody);
 }
-
+/*
 void stmkonf_klawiatury_8_klawiszowej()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
@@ -115,7 +115,7 @@ void stmkonf_klawiatury_8_klawiszowej()
 	GPIO_klawiatura.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOE, &GPIO_klawiatura);
 }
-
+*/
 void stmkonf_wbudowanego_przycisku()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);

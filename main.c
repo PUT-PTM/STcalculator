@@ -8,8 +8,8 @@
 #include "OurOwnFunctions.h"
 
 //z przerwaniami
-uint16_t pin8= GPIO_Pin_8;//A
-uint16_t pin7= GPIO_Pin_12;//C
+uint16_t pin8= GPIO_Pin_2;//D
+uint16_t pin7= GPIO_Pin_0;//D
 uint16_t pin6= GPIO_Pin_1;//D
 uint16_t pin5= GPIO_Pin_3;//D
 
@@ -32,7 +32,7 @@ int main(void)
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
 
-	stmkonf_diod_wbudowanych();
+	//stmkonf_diod_wbudowanych();
 
 	stmkonf_pinu_jako_wyjscie(GPIOB, pin1);
 	stmkonf_pinu_jako_wyjscie(GPIOB, pin2);
@@ -40,8 +40,8 @@ int main(void)
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin4);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin5);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
-	//stmkonf_pinu_jako_wejscie_down(GPIOC, pin7);
-	//stmkonf_pinu_jako_wejscie_down(GPIOA, pin8);
+	stmkonf_pinu_jako_wejscie_down(GPIOD, pin7);
+	stmkonf_pinu_jako_wejscie_down(GPIOD, pin8);
 
 
 	stmkonf_timera(TIM3, 8399, 99);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
@@ -53,9 +53,8 @@ int main(void)
 
 	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin6
-	/*tu jest problem - program przestaje dzialac po odkomentowaniu tejze linijki z gwiazdka
-	 * stmkonf_EXTI(EXTI15_10_IRQn, EXTI_Line12, EXTI_PortSourceGPIOC, EXTI_PinSource12);//przerwanie czekajace na dane z pin7
-	stmkonf_EXTI(EXTI9_5_IRQn, EXTI_Line10, EXTI_PortSourceGPIOA, EXTI_PinSource10);//przerwanie czekajace na dane z pin8*/
+	stmkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOD, EXTI_PinSource0);//przerwanie czekajace na dane z pin7
+	stmkonf_EXTI(EXTI2_IRQn, EXTI_Line2, EXTI_PortSourceGPIOD, EXTI_PinSource2);//przerwanie czekajace na dane z pin8
 	while(1)
 	{}
 }
@@ -69,9 +68,27 @@ void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 	}
 }
 
-void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin5
+void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin6
 {
 	if (EXTI_GetITStatus(EXTI_Line1) != RESET)
+	{
+		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
+		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
+	}
+}
+
+void EXTI0_IRQHandler ( void )//przerwanie czekajace na dane z pin7
+{
+	if (EXTI_GetITStatus(EXTI_Line0) != RESET)
+	{
+		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
+		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
+	}
+}
+
+void EXTI2_IRQHandler ( void )//przerwanie czekajace na dane z pin8
+{
+	if (EXTI_GetITStatus(EXTI_Line2) != RESET)
 	{
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
@@ -93,7 +110,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 1:
 			{
-				znak = 'C';
+				znak = 'D';
 				break;
 			}
 			case 2:
@@ -108,7 +125,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			}
 		}
-		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)//rzad najnizszy
+		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
 		{
 			switch(numer_aktualnie_zasilanego_pinu%4)
 			{
@@ -134,10 +151,64 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			}
 		}
+		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
+		{
+			switch(numer_aktualnie_zasilanego_pinu%4)
+			{
+			case 0:
+			{
+				znak = '4';
+				break;
+			}
+			case 1:
+			{
+				znak = 'B';
+				break;
+			}
+			case 2:
+			{
+				znak = '6';
+				break;
+			}
+			case 3:
+			{
+				znak = '5';
+				break;
+			}
+			}
+		}
+		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
+		{
+			switch(numer_aktualnie_zasilanego_pinu%4)
+			{
+			case 0:
+			{
+				znak = '1';
+				break;
+			}
+			case 1:
+			{
+				znak = 'A';
+				break;
+			}
+			case 2:
+			{
+				znak = '3';
+				break;
+			}
+			case 3:
+			{
+				znak = '2';
+				break;
+			}
+			}
+		}
 		stmwylacz_timer(TIM5);
 		TIM_ClearITPendingBit(TIM5, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
 		stmwlacz_timer(TIM3);//z powrotem wlacza przelaczanie zasilania na piny
 	}
 }
