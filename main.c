@@ -40,12 +40,13 @@ int main(void)
 	stmkonf_pinu_jako_wyjscie(GPIOB, pin2);
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin3);
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin4);
-	stmkonf_pinu_jako_wejscie_down(GPIOD, pin5);// | pin6);
+	stmkonf_pinu_jako_wejscie_down(GPIOD, pin5);
+	//stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
 	//stmkonf_pinu_jako_wejscie_down(GPIOC, pin7);
 	//stmkonf_pinu_jako_wejscie_down(GPIOA, pin8);
 
 
-	stmkonf_timera(TIM3, 8399, 2499);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
+	stmkonf_timera(TIM3, 8399, 99);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
