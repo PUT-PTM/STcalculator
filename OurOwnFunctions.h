@@ -1,41 +1,12 @@
 
-/*Zawsze dodajemy GPIO i RCC, TIM do timerow
-// zawsze podmienic na #define HSE_VALUE    ((uint32_t)8000000)// z 25 na 8
-#include "stm32f4xx_conf.h"
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_exti.h"
-#include "misc.h"
-#include "stm32f4xx_syscfg.h" //kontroler przerwan
-#include "OurOwnFunctions.h"
-
-
-int main(void)
-{
-	SystemInit(); // pierwsza komenda niezbedna do dzialania
-
-	// GPIOD Periph clock enable, takotwanie, niezbedne do dzialania
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
-
-	TIM3 TIM4 do APB1
-	nie wiem jakie timery do APB2
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIMx, ENABLE );//podlaczenie timera do szyny - niezbedne do dzialania
-	TIM_Cmd(TIMx, ENABLE);// komenda uruchamiania timera
-
-	auto counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
+/*
+	int counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
 	if (TIM_GetFlagStatus(TIMx, TIM_FLAG_Update ))
 	{
 		TIM_ClearFlag(TIMx, TIM_FLAG_Update );
 		GPIO_ResetBits(GPIOD, GPIO_Pin_x);
 		GPIO_SetBits(GPIOD, GPIO_Pin_x);
 	}
-}
-
 timery:
 Timery 2-5 oraz 9-14 - timery ogólnego przeznaczenia
 Timery 6 i 7 - podstawowe peryferia o najprostszych funkcjach
@@ -58,7 +29,7 @@ PB1 - TIM3_CH4
 PB2, 8, 11-15
 PC1, 2, 4-6, 8, 9, 11, 13-15
 PC7 - TIM3_CH2 i jakies MCLK jakby cos nie dzialalo ok
-PD0-3, 6-11
+PD6-11
 PD12-15 diody wbudowane
 PE2, 4-6
 PE7-14 klawiatura 8-przyciskowa
@@ -70,10 +41,11 @@ PB4 - pin2 klawiatury
 PB5 - 
 PB6 - pin1 klawiatury
 PB7 - 
-PD1 - 
-PD2 - 
+PD0 -
+PD1 - pin7
+PD2 - pin6
 PD3 - pin5 klawiatury przerwanie
-PD4 - 
+PD4 - pin8
 PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
 PD6 - pin4 klawiatury
 PD7 - pin3 klawiatury
@@ -110,7 +82,7 @@ void stmkonf_klawiatury_8_klawiszowej()
 	GPIO_InitTypeDef GPIO_klawiatura;
 	GPIO_klawiatura.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10| GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
 	GPIO_klawiatura.GPIO_Mode = GPIO_Mode_IN;
-	//GPIO_klawiatura.GPIO_OType = GPIO_OType_PP; // wypelic jesli pin jest wejsciem
+	//GPIO_klawiatura.GPIO_OType = GPIO_OType_PP; // wypelic jesli pin jest wyjsciem
 	GPIO_klawiatura.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_klawiatura.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOE, &GPIO_klawiatura);
