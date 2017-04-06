@@ -19,7 +19,7 @@ uint16_t pin3= GPIO_Pin_7;//D
 uint16_t pin2= GPIO_Pin_4;//B
 uint16_t pin1= GPIO_Pin_6;//B
 
-uint8_t numer_aktualnie_zasilanego_pinu = 0;
+uint8_t zasilany_pin = 0;
 int licznik;
 int znacznik;
 char znak;
@@ -46,7 +46,7 @@ int main(void)
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin8);
 
 
-	stmkonf_timera(TIM3, 8399, 99);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
+	stmkonf_timera(TIM3, 8399, 199);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
@@ -113,7 +113,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 	{
 		if(GPIO_ReadInputDataBit(GPIOD, pin5) != RESET)//rzad najnizszy
 		{
-			switch(numer_aktualnie_zasilanego_pinu%4)
+			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
@@ -135,11 +135,13 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				znak = '0';
 				break;
 			}
+			default:
+				break;
 			}
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
 		{
-			switch(numer_aktualnie_zasilanego_pinu%4)
+			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
@@ -161,11 +163,13 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				znak = '8';
 				break;
 			}
+			default:
+				break;
 			}
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
 		{
-			switch(numer_aktualnie_zasilanego_pinu%4)
+			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
@@ -187,11 +191,13 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				znak = '5';
 				break;
 			}
+			default:
+				break;
 			}
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
 		{
-			switch(numer_aktualnie_zasilanego_pinu%4)
+			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
@@ -213,6 +219,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				znak = '2';
 				break;
 			}
+			default:
+				break;
 			}
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
@@ -229,13 +237,12 @@ void TIM3_IRQHandler ( void )
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
 	{znacznik = 10;
-		numer_aktualnie_zasilanego_pinu++;
-		switch(numer_aktualnie_zasilanego_pinu%4)
+		zasilany_pin++;
+		switch(zasilany_pin%4)
 		{
 		case 0:
 		{
 			GPIO_ResetBits(GPIOD, pin3);
-			//GPIO_ReadOutputDataBit()
 			GPIO_SetBits(GPIOD, pin4);
 			break;
 		}

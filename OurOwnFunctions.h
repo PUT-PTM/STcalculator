@@ -3,10 +3,10 @@
 	int counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
 	if (TIM_GetFlagStatus(TIMx, TIM_FLAG_Update ))
 	{
+		//your code here
 		TIM_ClearFlag(TIMx, TIM_FLAG_Update );
-		GPIO_ResetBits(GPIOD, GPIO_Pin_x);
-		GPIO_SetBits(GPIOD, GPIO_Pin_x);
 	}
+
 timery:
 Timery 2-5 oraz 9-14 - timery ogólnego przeznaczenia
 Timery 6 i 7 - podstawowe peryferia o najprostszych funkcjach
@@ -19,29 +19,9 @@ W przypadku timerów: TIM2 - TIM7, TIM12 - TIM14 ftim = fcpu/2 = 84 MHz (szyna AP
 
 piny wolne:
 PA0 - przycisk wbudowany
-PA1 - ADC1
-PA2 - ADC2
-PA3 - DAC?
-PA6 - TIM3_CH1
-PA8, 15
-PB0 - TIM3_CH3
-PB1 - TIM3_CH4
-PB2, 8, 11-15
-PC1, 2, 4-6, 8, 9, 11, 13-15
-PC7 - TIM3_CH2 i jakies MCLK jakby cos nie dzialalo ok
-PD6-11
 PD12-15 diody wbudowane
-PE2, 4-6
-PE7-14 klawiatura 8-przyciskowa
-PE15
-
-piny
-PB3 - 
 PB4 - pin2 klawiatury
-PB5 - 
 PB6 - pin1 klawiatury
-PB7 - 
-PD0 -
 PD1 - pin7
 PD2 - pin6
 PD3 - pin5 klawiatury przerwanie
@@ -58,10 +38,10 @@ if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
 }
 */
 
-uint16_t dioda_zielona = GPIO_Pin_12;
-uint16_t dioda_pomaranczowa = GPIO_Pin_13;
-uint16_t dioda_czerwona = GPIO_Pin_14;
-uint16_t dioda_niebieska = GPIO_Pin_15;
+uint16_t dioda_zielona = GPIO_Pin_12;//D
+uint16_t dioda_pomaranczowa = GPIO_Pin_13;//D
+uint16_t dioda_czerwona = GPIO_Pin_14;//D
+uint16_t dioda_niebieska = GPIO_Pin_15;//D
 
 void stmkonf_diod_wbudowanych()
 {//dziala
@@ -75,19 +55,7 @@ void stmkonf_diod_wbudowanych()
 	GPIO_Diody.GPIO_PuPd = GPIO_PuPd_NOPULL; // podciaganie vcc masa lub tu nic
 	GPIO_Init(GPIOD, &GPIO_Diody);
 }
-/*
-void stmkonf_klawiatury_8_klawiszowej()
-{//dziala
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
-	GPIO_InitTypeDef GPIO_klawiatura;
-	GPIO_klawiatura.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10| GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
-	GPIO_klawiatura.GPIO_Mode = GPIO_Mode_IN;
-	//GPIO_klawiatura.GPIO_OType = GPIO_OType_PP; // wypelic jesli pin jest wyjsciem
-	GPIO_klawiatura.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_klawiatura.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOE, &GPIO_klawiatura);
-}
-*/
+
 void stmkonf_wbudowanego_przycisku()
 {//dziala
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
@@ -100,7 +68,7 @@ void stmkonf_wbudowanego_przycisku()
 	GPIO_Init(GPIOA, &GPIO_przycisk);
 }
 
-void stmkonf_pinu_jako_wejscie(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
+void stmkonf_pinu_jako_wejscie_up(GPIO_TypeDef* GPIOx, uint32_t GPIO_Pin_x)
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
