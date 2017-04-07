@@ -40,7 +40,7 @@ How to compile
 
 czy niezbêdne jest podjêcie jakiœ specjalnych kroków, czy wystarczy skopiowaæ?
 
-No, just copy.
+Just copy.
 
 
 
