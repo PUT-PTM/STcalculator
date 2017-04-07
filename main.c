@@ -8,7 +8,7 @@
 #include "OurOwnFunctions.h"
 
 //z przerwaniami
-uint16_t pin8= GPIO_Pin_4;//D
+uint16_t pin8= GPIO_Pin_0;//D
 uint16_t pin7= GPIO_Pin_1;//D
 uint16_t pin6= GPIO_Pin_2;//D
 uint16_t pin5= GPIO_Pin_3;//D
@@ -16,13 +16,13 @@ uint16_t pin5= GPIO_Pin_3;//D
 //bez przerwan
 uint16_t pin4= GPIO_Pin_6;//D
 uint16_t pin3= GPIO_Pin_7;//D
-uint16_t pin2= GPIO_Pin_4;//B
-uint16_t pin1= GPIO_Pin_6;//B
+uint16_t pin2= GPIO_Pin_5;//B
+uint16_t pin1= GPIO_Pin_7;//B
 
 uint8_t zasilany_pin = 0;
-int licznik;
-int znacznik;
-char znak;
+int znacznik=0;
+char oldznak=0;
+char znak=0;
 
 int main(void)
 {
@@ -50,23 +50,26 @@ int main(void)
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM5, 8399, 1249);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
+	stmkonf_timera(TIM5, 8399, 1499);//czeka 150,0ms i dopiero sprawdza stan pinu
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
 	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
 	stmkonf_EXTI(EXTI2_IRQn, EXTI_Line2, EXTI_PortSourceGPIOD, EXTI_PinSource2);//przerwanie czekajace na dane z pin6
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin7
-	stmkonf_EXTI(EXTI4_IRQn, EXTI_Line4, EXTI_PortSourceGPIOD, EXTI_PinSource4);//przerwanie czekajace na dane z pin8
+	stmkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOD, EXTI_PinSource0);//przerwanie czekajace na dane z pin8
 	while(1)
 	{
-		licznik = TIM3->CNT;
 	}
 }
 
 void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 {
 	if (EXTI_GetITStatus(EXTI_Line3) != RESET)
-	{znacznik = 3;
+	{
+		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
+		znacznik = 3; GPIO_ToggleBits(GPIOD,dioda_zielona);
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
 		znacznik = 33;
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
@@ -77,7 +80,11 @@ void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 void EXTI2_IRQHandler ( void )//przerwanie czekajace na dane z pin6
 {
 	if (EXTI_GetITStatus(EXTI_Line2) != RESET)
-	{znacznik = 2;
+	{
+		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
+		znacznik = 2; GPIO_ToggleBits(GPIOD,dioda_pomaranczowa);
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
 		znacznik = 22;
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
@@ -88,7 +95,11 @@ void EXTI2_IRQHandler ( void )//przerwanie czekajace na dane z pin6
 void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin7
 {
 	if (EXTI_GetITStatus(EXTI_Line1) != RESET)
-	{znacznik = 1;
+	{
+		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
+		znacznik = 1; GPIO_ToggleBits(GPIOD,dioda_czerwona);
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
 		znacznik = 11;
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
@@ -96,14 +107,18 @@ void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin7
 	}
 }
 
-void EXTI4_IRQHandler ( void )//przerwanie czekajace na dane z pin8
+void EXTI0_IRQHandler ( void )//przerwanie czekajace na dane z pin8
 {
-	if (EXTI_GetITStatus(EXTI_Line4) != RESET)
-	{znacznik = 4;
+	if (EXTI_GetITStatus(EXTI_Line0) != RESET)
+	{
+		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
+		znacznik = 9; GPIO_ToggleBits(GPIOD,dioda_niebieska);
 		stmwylacz_timer(TIM3);//wylacza przelaczanie zasilania na piny
-		znacznik = 44;
+		znacznik = 99;
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
-		znacznik = 444;
+		znacznik = 999;
 	}
 }
 
@@ -111,6 +126,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 {
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
+		oldznak=znak;
 		if(GPIO_ReadInputDataBit(GPIOD, pin5) != RESET)//rzad najnizszy
 		{
 			switch(zasilany_pin%4)
@@ -226,7 +242,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
-		EXTI_ClearITPendingBit(EXTI_Line4);// wyzerowanie flagi wyzwolonego przerwania
+		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
 		stmwylacz_timer(TIM5);
 		TIM_ClearITPendingBit(TIM5, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 		stmwlacz_timer(TIM3);//z powrotem wlacza przelaczanie zasilania na piny

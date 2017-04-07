@@ -1,43 +1,3 @@
-
-/*
-	int counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
-	if (TIM_GetFlagStatus(TIMx, TIM_FLAG_Update ))
-	{
-		//your code here
-		TIM_ClearFlag(TIMx, TIM_FLAG_Update );
-	}
-
-timery:
-Timery 2-5 oraz 9-14 - timery ogólnego przeznaczenia
-Timery 6 i 7 - podstawowe peryferia o najprostszych funkcjach
-Timery 1 i 8 - zaawansowane timery do najbardziej z³o¿onych zadañ
-
-Maksymalna czêstotliwoœæ inkrementacji/dekrementacji timera zale¿y od tego
-do której szyny APB zosta³ pod³¹czony.
-W przypadku timerów: TIM1, TIM8, TIM9, TIM10 i TIM11 ftim = fcpu = 168 MHz (szyna APB2).
-W przypadku timerów: TIM2 - TIM7, TIM12 - TIM14 ftim = fcpu/2 = 84 MHz (szyna APB1).
-
-piny wolne:
-PA0 - przycisk wbudowany
-PD12-15 diody wbudowane
-PB4 - pin2 klawiatury
-PB6 - pin1 klawiatury
-PD1 - pin7
-PD2 - pin6
-PD3 - pin5 klawiatury przerwanie
-PD4 - pin8
-PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
-PD6 - pin4 klawiatury
-PD7 - pin3 klawiatury
-
-
-if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
-{
-	GPIO_SetBits(GPIOD, GPIO_Pin_x);
-	//GPIO_ResetBits(GPIOD, GPIO_Pin_x);
-}
-*/
-
 uint16_t dioda_zielona = GPIO_Pin_12;//D
 uint16_t dioda_pomaranczowa = GPIO_Pin_13;//D
 uint16_t dioda_czerwona = GPIO_Pin_14;//D
@@ -125,15 +85,15 @@ void stmkonf_timera(TIM_TypeDef* TIMx, uint16_t prescaler, uint32_t period)
 	{
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE); // konfiguracja zegara
 	}
-	if(TIMx == TIM3)
+	else if(TIMx == TIM3)
 	{
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); // konfiguracja zegara
 	}
-	if(TIMx == TIM4)
+	else if(TIMx == TIM4)
 	{
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); // konfiguracja zegara
 	}
-	if(TIMx == TIM5)
+	else if(TIMx == TIM5)
 	{
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE); // konfiguracja zegara
 	}
@@ -177,7 +137,7 @@ void stmkonf_NVIC_timera(TIM_TypeDef* TIMx, uint8_t TIMx_IRQn)
 void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
 {//dziala
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);//uruchomiæ zasilanie systemu przerwañ
-	
+
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct. NVIC_IRQChannel = EXTIx_IRQn;// numer przerwania
 	NVIC_InitStruct. NVIC_IRQChannelPreemptionPriority = 0x00;// priorytet g³ówny
@@ -194,25 +154,3 @@ void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSour
 
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOx, EXTI_PinSourcex);
 }
-
-/*
-void TIM3_IRQHandler ( void )
-{
-	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
-	{
-		// miejsce na kod wywo³ywany w momencie wyst¹pienia przerwania
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
-	}
-}
-
-void EXTI0_IRQHandler ( void )
-{
-	if (EXTI_GetITStatus(EXTI_Line0) != RESET)
-	{
-		// miejsce na kod wywo³ywany w momencie wyst¹pienia przerwania
-		// wyzerowanie flagi wyzwolonego przerwania
-		EXTI_ClearITPendingBit(EXTI_Line0);
-	}
-}
-*/
-
