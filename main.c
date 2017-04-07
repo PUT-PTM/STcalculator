@@ -167,6 +167,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
+			CharLCD_SetCursor(1,1);
+			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
 		{
@@ -197,6 +199,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
+			CharLCD_SetCursor(1,1);
+			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
 		{
@@ -227,6 +231,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
+			CharLCD_SetCursor(1,1);
+			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
 		{
@@ -257,6 +263,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
+			CharLCD_SetCursor(1,1);
+			CharLCD_WriteLineWrap(napis);
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania

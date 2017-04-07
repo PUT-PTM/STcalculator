@@ -4,8 +4,8 @@
 <window>
 <fastViewData fastViewLocation="1024">
 <orientation position="512" view="org.eclipse.debug.ui.ExpressionView"/>
-<orientation position="512" view="org.coocox.builder.ui.views.ProjectView"/>
 <orientation position="512" view="org.coocox.component.ui.ComponentView"/>
+<orientation position="512" view="org.coocox.builder.ui.views.ProjectView"/>
 <orientation position="512" view="org.coocox.codebugger.trace.ui.traceview"/>
 <orientation position="512" view="org.eclipse.debug.ui.DebugView"/>
 <orientation position="512" view="org.eclipse.ui.console.ConsoleView"/>
@@ -27,7 +27,7 @@
 </editorArea>
 <editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="D:/STcalculator/main.c" title="main.c" tooltip="D:/STcalculator/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="5" selectionOffset="2284" selectionTopPixel="918"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6658" selectionTopPixel="4443"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="OurOwnFunctions.h" partName="OurOwnFunctions.h" path="D:/STcalculator/OurOwnFunctions.h" title="OurOwnFunctions.h" tooltip="D:/STcalculator/OurOwnFunctions.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/OurOwnFunctions.h"/>
@@ -84,7 +84,7 @@
 <fastViewBars>
 <fastViewBar fastViewLocation="1024" id="org.eclipse.ui.internal.ViewStack@163c061" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
 <fastViews>
-<view id="org.eclipse.ui.console.ConsoleView" ratio="0.19635193"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.19553666"/>
 </fastViews>
 </fastViewBar>
 </fastViewBars>
@@ -140,18 +140,8 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/OurOwnFunctions.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/STcalculator/cmsis_boot/stm32f4xx.h"/>
 </editors>
-<item historyLabel="main.c" index="0">
-<position/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1173" y="2"/>
-</item>
-<item historyLabel="OurOwnFunctions.h" index="1">
-<position info="not_deleted" x="2201" y="0"/>
-</item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="1097" y="0"/>
 </item>
@@ -164,7 +154,7 @@
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="2993" y="2"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="2">
+<item historyLabel="OurOwnFunctions.h" index="1">
 <position info="not_deleted" x="3842" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
@@ -173,79 +163,79 @@
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="3209" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="6418" y="23"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="7880" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="934" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="934" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="800" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="934" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="934" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="934" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="4" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="4" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="4" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="4" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="10" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5198" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="9254" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
@@ -257,25 +247,25 @@
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5034" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="3">
+<item historyLabel="OurOwnFunctions.h" index="2">
 <position info="not_deleted" x="1166" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="5034" y="0"/>
 </item>
-<item historyLabel="OurOwnFunctions.h" index="4">
+<item historyLabel="OurOwnFunctions.h" index="3">
+<position info="not_deleted" x="4475" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="6012" y="0"/>
+</item>
+<item historyLabel="OurOwnFunctions.h" index="3">
 <position info="not_deleted" x="4475" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="6012" y="0"/>
 </item>
 <item historyLabel="OurOwnFunctions.h" index="4">
-<position info="not_deleted" x="4475" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="6012" y="0"/>
-</item>
-<item historyLabel="OurOwnFunctions.h" index="5">
 <position info="not_deleted" x="3294" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
@@ -287,11 +277,20 @@
 <item historyLabel="main.c" index="0">
 <position info="not_deleted" x="3273" y="57"/>
 </item>
-<item historyLabel="stm32f4xx.h" index="6">
+<item historyLabel="stm32f4xx.h" index="5">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="main.c" index="0">
+<item historyLabel="main.c" index="0">
 <position info="not_deleted" x="3740" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="5276" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="6658" y="0"/>
+</item>
+<item active="true" historyLabel="main.c" index="0">
+<position info="not_deleted" x="2310" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
