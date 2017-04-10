@@ -16,8 +16,8 @@
 #define Set_RW GPIO_SetBits(GPIOD,GPIO_Pin_8)
 #define Clr_RW GPIO_ResetBits(GPIOD,GPIO_Pin_8)
 
-#define Set_En GPIO_SetBits(GPIOD,GPIO_Pin_9)
-#define Clr_En GPIO_ResetBits(GPIOD,GPIO_Pin_9)
+#define Set_En GPIO_SetBits(GPIOD,GPIO_Pin_3)
+#define Clr_En GPIO_ResetBits(GPIOD,GPIO_Pin_3)
 
 // May use pwm and a transistor on the 5V rail in the final version
 #define Backlight_On GPIO_SetBits(GPIOD,GPIO_Pin_10)

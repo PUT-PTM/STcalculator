@@ -36,7 +36,7 @@ void CharLCD_Config(void)
 	GPIO_Init(GPIOE,&GPIO_InitStructure);
 
 	// Control pins
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_3;
 	GPIO_Init(GPIOD,&GPIO_InitStructure);
 }
 

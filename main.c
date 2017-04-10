@@ -1,4 +1,3 @@
-#include "stm32f4xx.h"//po co to include'owac?
 #include "stm32f4xx_conf.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
@@ -10,34 +9,27 @@
 #include "charlcd.h"
 
 //keypad
-//z przerwaniami
-uint16_t pin8= GPIO_Pin_0;//D
-uint16_t pin7= GPIO_Pin_1;//D
-uint16_t pin6= GPIO_Pin_2;//D
-uint16_t pin5= GPIO_Pin_3;//E
-
 //bez przerwan
-uint16_t pin4= GPIO_Pin_6;//D
-uint16_t pin3= GPIO_Pin_8;//A
-uint16_t pin2= GPIO_Pin_5;//B
 uint16_t pin1= GPIO_Pin_7;//B
+uint16_t pin2= GPIO_Pin_5;//B
+uint16_t pin3= GPIO_Pin_8;//A
+uint16_t pin4= GPIO_Pin_6;//D
+
+//z przerwaniami
+uint16_t pin5= GPIO_Pin_3;//A
+uint16_t pin6= GPIO_Pin_2;//D
+uint16_t pin7= GPIO_Pin_1;//D
+uint16_t pin8= GPIO_Pin_0;//D
 
 uint8_t zasilany_pin = 0;
 char oldznak = 0;
 char znak = 0;
 char napis[50]="Calculator";
-uint8_t i = 10;
+int i = 10;
 
 int main(void)
 {
 	SystemInit();
-
-	/* GPIOD Periph clock enable, takotwanie, niezbedne do dzialania */
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 
 	/*Natalia*/
 	stmkonf_diod_wbudowanych();
@@ -46,7 +38,7 @@ int main(void)
 	stmkonf_pinu_jako_wyjscie(GPIOB, pin2);
 	stmkonf_pinu_jako_wyjscie(GPIOA, pin3);
 	stmkonf_pinu_jako_wyjscie(GPIOD, pin4);
-	stmkonf_pinu_jako_wejscie_down(GPIOE, pin5);
+	stmkonf_pinu_jako_wejscie_down(GPIOA, pin5);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin7);
 	stmkonf_pinu_jako_wejscie_down(GPIOD, pin8);
@@ -59,6 +51,7 @@ int main(void)
 	stmkonf_timera(TIM5, 8399, 1499);//czeka 150,0ms i dopiero sprawdza stan pinu
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
+	//po zmianie EXTI3 z GPIOD na GPIOA, albo po usunieciu - wyswietlacz przestaje dzialac
 	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
 	stmkonf_EXTI(EXTI2_IRQn, EXTI_Line2, EXTI_PortSourceGPIOD, EXTI_PinSource2);//przerwanie czekajace na dane z pin6
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin7
@@ -74,11 +67,10 @@ int main(void)
 	//CharLCD_SetCursor(2,1);
 
 	CharLCD_WriteLineWrap(napis);
-	CharLCD_SetCursor(3,1);
+	CharLCD_SetCursor(2,1);
 
 	while(1)
-	{
-	}
+	{}
 }
 
 void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
@@ -138,7 +130,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
 		oldznak=znak;
-		if(GPIO_ReadInputDataBit(GPIOE, pin5) != RESET)//rzad najnizszy
+		if(GPIO_ReadInputDataBit(GPIOA, pin5) != RESET)//rzad najnizszy
 		{
 			switch(zasilany_pin%4)
 			{
@@ -167,7 +159,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_SetCursor(1,1);
+			CharLCD_Clear();
+			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
@@ -199,7 +192,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_SetCursor(1,1);
+			CharLCD_Clear();
+			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
@@ -231,7 +225,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_SetCursor(1,1);
+			CharLCD_Clear();
+			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
@@ -263,7 +258,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_SetCursor(1,1);
+			CharLCD_Clear();
+			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
