@@ -1,3 +1,4 @@
+#include "stm32f4xx.h"
 #include "stm32f4xx_conf.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
@@ -29,8 +30,6 @@ int i = 10;
 
 int main(void)
 {
-	SystemInit();
-
 	/*Natalia*/
 	stmkonf_diod_wbudowanych();
 
@@ -48,11 +47,11 @@ int main(void)
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM5, 8399, 1499);//czeka 150,0ms i dopiero sprawdza stan pinu
+	stmkonf_timera(TIM5, 8399, 299);//redukcja drgan stykow
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
 	//po zmianie EXTI3 z GPIOD na GPIOA, albo po usunieciu - wyswietlacz przestaje dzialac
-	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOD, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
+	stmkonf_EXTI(EXTI3_IRQn, EXTI_Line3, EXTI_PortSourceGPIOA, EXTI_PinSource3);//przerwanie czekajace na dane z pin5
 	stmkonf_EXTI(EXTI2_IRQn, EXTI_Line2, EXTI_PortSourceGPIOD, EXTI_PinSource2);//przerwanie czekajace na dane z pin6
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin7
 	stmkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOD, EXTI_PinSource0);//przerwanie czekajace na dane z pin8
@@ -67,7 +66,6 @@ int main(void)
 	//CharLCD_SetCursor(2,1);
 
 	CharLCD_WriteLineWrap(napis);
-	CharLCD_SetCursor(2,1);
 
 	while(1)
 	{}
@@ -137,30 +135,36 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			case 0:
 			{
 				znak = '*';
+				napis[i] = znak;
+				i++;
 				break;
 			}
 			case 1:
 			{
 				znak = 'D';
+				napis[i] = znak;
+				i++;
 				break;
 			}
 			case 2:
 			{
-				znak = '#';
+				//znak = '#';
+				for(int c=0; c<i; c++)
+				{napis[c] = '\0';}
+				i=0;
 				break;
 			}
 			case 3:
 			{
 				znak = '0';
+				napis[i] = znak;
+				i++;
 				break;
 			}
 			default:
 				break;
 			}
-			napis[i] = znak;
-			i++;
 			CharLCD_Clear();
-			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
@@ -193,7 +197,6 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			napis[i] = znak;
 			i++;
 			CharLCD_Clear();
-			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
@@ -226,7 +229,6 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			napis[i] = znak;
 			i++;
 			CharLCD_Clear();
-			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
@@ -259,7 +261,6 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			napis[i] = znak;
 			i++;
 			CharLCD_Clear();
-			//CharLCD_SetCursor(1,1);
 			CharLCD_WriteLineWrap(napis);
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
