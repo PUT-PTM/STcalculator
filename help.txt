@@ -1,11 +1,25 @@
+/*
+LCD	STM32F4xx		DESCRIPTION
+GND	GND				Ground
+VCC	+5V				Power supply for LCD
+V0	Potentiometer	Contrast voltage. Connect to potentiometer
+RS	PB2				Register select, can be overwritten in your project’s defines.h file
+RW	GND				Read/write
+E	PB7				Enable pin, can be overwritten in your project’s defines.h file
+D0		Data 0 – doesn’t care
+D1		Data 1 – doesn’t care
+D2		Data 2 – doesn’t care
+D3		Data 3 – doesn’t  care
+D4	PC12			Data 4, can be overwritten in your project’s defines.h file
+D5	PC13			Data 5, can be overwritten in your project’s defines.h file
+D6	PB12			Data 6, can be overwritten in your project’s defines.h file
+D7	PB13			Data 7, can be overwritten in your project’s defines.h file
+A	+3V3			Backlight positive power
+K	GND				Ground for backlight
+*/
 
 /*
-	int counter = TIMx->CNT; //aktualna wartosc licznika powiazana z periodem
-	if (TIM_GetFlagStatus(TIMx, TIM_FLAG_Update ))
-	{
-		//your code here
-		TIM_ClearFlag(TIMx, TIM_FLAG_Update );
-	}
+
 
 timery:
 Timery 2-5 oraz 9-14 - timery ogólnego przeznaczenia
@@ -22,31 +36,5 @@ PA0 - przycisk wbudowany
 PD12-15 diody wbudowane
 PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
 
-
-
-if(GPIO_ReadInputDataBit(GPIOE, GPIO_Pin_x)==RESET)
-{
-	GPIO_SetBits(GPIOD, GPIO_Pin_x);
-	//GPIO_ResetBits(GPIOD, GPIO_Pin_x);
-}
-
-void TIM3_IRQHandler ( void )
-{
-	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
-	{
-		// miejsce na kod wywo³ywany w momencie wyst¹pienia przerwania
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
-	}
-}
-
-void EXTI0_IRQHandler ( void )
-{
-	if (EXTI_GetITStatus(EXTI_Line0) != RESET)
-	{
-		// miejsce na kod wywo³ywany w momencie wyst¹pienia przerwania
-		// wyzerowanie flagi wyzwolonego przerwania
-		EXTI_ClearITPendingBit(EXTI_Line0);
-	}
-}
 */
 

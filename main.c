@@ -1,4 +1,8 @@
+#include "defines.h"
 #include "stm32f4xx.h"
+#include "tm_stm32f4_delay.h"
+#include "tm_stm32f4_hd44780.h"
+
 #include "stm32f4xx_conf.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
@@ -7,47 +11,66 @@
 #include "misc.h"
 #include "stm32f4xx_syscfg.h"
 #include "OurOwnFunctions.h"
-#include "charlcd.h"
 
 //keypad
 //bez przerwan
-uint16_t pin1= GPIO_Pin_7;//B
-uint16_t pin2= GPIO_Pin_5;//B
-uint16_t pin3= GPIO_Pin_8;//A
-uint16_t pin4= GPIO_Pin_6;//D
+uint16_t pin1= GPIO_Pin_4;
+GPIO_TypeDef* port1= GPIOB;
+
+uint16_t pin2= GPIO_Pin_5;
+GPIO_TypeDef* port2= GPIOB;
+
+uint16_t pin3= GPIO_Pin_7;
+GPIO_TypeDef* port3= GPIOD;
+
+uint16_t pin4= GPIO_Pin_6;
+GPIO_TypeDef* port4= GPIOD;
+
 
 //z przerwaniami
-uint16_t pin5= GPIO_Pin_3;//A
-uint16_t pin6= GPIO_Pin_2;//D
-uint16_t pin7= GPIO_Pin_1;//D
-uint16_t pin8= GPIO_Pin_0;//D
+uint16_t pin5= GPIO_Pin_3;
+GPIO_TypeDef* port5= GPIOA;
+
+uint16_t pin6= GPIO_Pin_2;
+GPIO_TypeDef* port6= GPIOD;
+
+uint16_t pin7= GPIO_Pin_1;
+GPIO_TypeDef* port7= GPIOD;
+
+uint16_t pin8= GPIO_Pin_0;
+GPIO_TypeDef* port8= GPIOD;
+
 
 uint8_t zasilany_pin = 0;
 char oldznak = 0;
 char znak = 0;
-char napis[50]="Calculator";
-int i = 10;
+const int n=31;//max number of characters
+char napis[31]="CalculatorCalculatorCalculator";
+int i = 30;
 
 int main(void)
 {
+    //Initialize system
+    SystemInit();
+
 	/*Natalia*/
 	stmkonf_diod_wbudowanych();
 
-	stmkonf_pinu_jako_wyjscie(GPIOB, pin1);
-	stmkonf_pinu_jako_wyjscie(GPIOB, pin2);
-	stmkonf_pinu_jako_wyjscie(GPIOA, pin3);
-	stmkonf_pinu_jako_wyjscie(GPIOD, pin4);
-	stmkonf_pinu_jako_wejscie_down(GPIOA, pin5);
-	stmkonf_pinu_jako_wejscie_down(GPIOD, pin6);
-	stmkonf_pinu_jako_wejscie_down(GPIOD, pin7);
-	stmkonf_pinu_jako_wejscie_down(GPIOD, pin8);
+	stmkonf_pinu_jako_wyjscie(port1, pin1);
+	stmkonf_pinu_jako_wyjscie(port2, pin2);
+	stmkonf_pinu_jako_wyjscie(port3, pin3);
+	stmkonf_pinu_jako_wyjscie(port4, pin4);
+	stmkonf_pinu_jako_wejscie_down(port5, pin5);
+	stmkonf_pinu_jako_wejscie_down(port6, pin6);
+	stmkonf_pinu_jako_wejscie_down(port7, pin7);
+	stmkonf_pinu_jako_wejscie_down(port8, pin8);
 
 
 	stmkonf_timera(TIM3, 8399, 199);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM5, 8399, 299);//redukcja drgan stykow
+	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
 
 	//po zmianie EXTI3 z GPIOD na GPIOA, albo po usunieciu - wyswietlacz przestaje dzialac
@@ -57,20 +80,25 @@ int main(void)
 	stmkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOD, EXTI_PinSource0);//przerwanie czekajace na dane z pin8
 
 	/*Piotr*/
-	CharLCD_Config();
-	CharLCD_Init();
-	//CharLCD_Clear();
+    //Initialize LCD 20 cols x 4 rows
+    //TM_HD44780_Init(20, 4);
+    TM_HD44780_Init(16, 2);
 
-	//CharLCD_SetCursor(1,1);
-	//CharLCD_WriteLineWrap("Hello World!");
-	//CharLCD_SetCursor(2,1);
 
-	CharLCD_WriteLineWrap(napis);
+    //Put string to LCD
+    TM_HD44780_Puts(0, 0, napis);
 
-	while(1)
-	{}
+    //Show cursor
+    TM_HD44780_CursorOn();
+
+    //Enable cursor blinking
+    TM_HD44780_BlinkOn();
+
+    while (1)
+    {}
 }
 
+/*Natalia*/
 void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 {
 	if (EXTI_GetITStatus(EXTI_Line3) != RESET)
@@ -128,22 +156,28 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
 		oldznak=znak;
-		if(GPIO_ReadInputDataBit(GPIOA, pin5) != RESET)//rzad najnizszy
+		if(GPIO_ReadInputDataBit(port5, pin5) != RESET)//rzad najnizszy
 		{
 			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
-				znak = '*';
-				napis[i] = znak;
-				i++;
+				if(i<n)
+				{
+					znak = '*';
+					napis[i] = znak;
+					i++;
+				}
 				break;
 			}
 			case 1:
 			{
-				znak = 'D';
-				napis[i] = znak;
-				i++;
+				if(i<n)
+				{
+					znak = 'D';
+					napis[i] = znak;
+					i++;
+				}
 				break;
 			}
 			case 2:
@@ -156,18 +190,21 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 3:
 			{
-				znak = '0';
-				napis[i] = znak;
-				i++;
+				if(i<n)
+				{
+					znak = '0';
+					napis[i] = znak;
+					i++;
+				}
 				break;
 			}
 			default:
 				break;
 			}
-			CharLCD_Clear();
-			CharLCD_WriteLineWrap(napis);
+			TM_HD44780_Clear();//Clear Display
+			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(GPIOD, pin6) != RESET)
+		else if(GPIO_ReadInputDataBit(port6, pin6) != RESET && i<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -196,10 +233,10 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_Clear();
-			CharLCD_WriteLineWrap(napis);
+			TM_HD44780_Clear();//Clear Display
+			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(GPIOD, pin7) != RESET)
+		else if(GPIO_ReadInputDataBit(port7, pin7) != RESET && i<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -228,10 +265,10 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_Clear();
-			CharLCD_WriteLineWrap(napis);
+			TM_HD44780_Clear();//Clear Display
+			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(GPIOD, pin8) != RESET)
+		else if(GPIO_ReadInputDataBit(port8, pin8) != RESET && i<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -260,8 +297,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			napis[i] = znak;
 			i++;
-			CharLCD_Clear();
-			CharLCD_WriteLineWrap(napis);
+			TM_HD44780_Clear();//Clear Display
+			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
@@ -282,29 +319,31 @@ void TIM3_IRQHandler ( void )
 		{
 		case 0:
 		{
-			GPIO_ResetBits(GPIOA, pin3);
-			GPIO_SetBits(GPIOD, pin4);
+			GPIO_ResetBits(port3, pin3);
+			GPIO_SetBits(port4, pin4);
 			break;
 		}
 		case 1:
 		{
-			GPIO_ResetBits(GPIOD, pin4);
-			GPIO_SetBits(GPIOB, pin1);
+			GPIO_ResetBits(port4, pin4);
+			GPIO_SetBits(port1, pin1);
 			break;
 		}
 		case 2:
 		{
-			GPIO_ResetBits(GPIOB, pin1);
-			GPIO_SetBits(GPIOB, pin2);
+			GPIO_ResetBits(port1, pin1);
+			GPIO_SetBits(port2, pin2);
 			break;
 		}
 		case 3:
 		{
-			GPIO_ResetBits(GPIOB, pin2);
-			GPIO_SetBits(GPIOA, pin3);
+			GPIO_ResetBits(port2, pin2);
+			GPIO_SetBits(port3, pin3);
 			break;
 		}
 		}
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);// wyzerowanie flagi wyzwolonego przerwania
 	}
 }
+
+
