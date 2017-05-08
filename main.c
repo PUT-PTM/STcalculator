@@ -11,6 +11,7 @@
 #include "misc.h"
 #include "stm32f4xx_syscfg.h"
 #include "OurOwnFunctions.h"
+#include "interpreter.h"
 
 //keypad
 //bez przerwan
@@ -39,14 +40,13 @@ GPIO_TypeDef* port7= GPIOD;
 
 uint16_t pin8= GPIO_Pin_0;
 GPIO_TypeDef* port8= GPIOD;
-//PB8 TIM4_CH3
+
 
 uint8_t zasilany_pin = 0;
-char oldznak = 0;
 char znak = 0;
-const int n=31;//max number of characters
-char napis[31]="CalculatorCalculatorCalculator";
-int i = 30;
+char napis[31]="1+20.1*1.12+4";
+signed int dlugoscnapis = 13;
+int shift=0;
 
 int main(void)
 {
@@ -112,7 +112,6 @@ void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
-		GPIO_ToggleBits(GPIOD,dioda_zielona);
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	}
 }
@@ -125,7 +124,6 @@ void EXTI2_IRQHandler ( void )//przerwanie czekajace na dane z pin6
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
-		GPIO_ToggleBits(GPIOD,dioda_pomaranczowa);
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	}
 }
@@ -138,7 +136,6 @@ void EXTI1_IRQHandler ( void )//przerwanie czekajace na dane z pin7
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line0);// wyzerowanie flagi wyzwolonego przerwania
-		GPIO_ToggleBits(GPIOD,dioda_czerwona);
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	}
 }
@@ -151,7 +148,6 @@ void EXTI0_IRQHandler ( void )//przerwanie czekajace na dane z pin8
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line1);// wyzerowanie flagi wyzwolonego przerwania
-		GPIO_ToggleBits(GPIOD,dioda_niebieska);
 		stmwlacz_timer(TIM5);//czeka 1/8 sekundy i dopiero sprawdza stan pinu
 	}
 }
@@ -160,46 +156,46 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 {
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
-		oldznak=znak;
+			   
 		if(GPIO_ReadInputDataBit(port5, pin5) != RESET)//rzad najnizszy
 		{
 			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
-				if(i<n)
-				{
-					znak = '*';
-					napis[i] = znak;
-					i++;
-				}
+				shift^=1;//* na klawiaturze, ma byc shift
+				GPIO_ToggleBits(GPIOD,dioda_zielona);
+				
+					 
+		 
+	 
 				break;
 			}
 			case 1:
 			{
-				if(i<n)
+				if(dlugoscnapis < n)
 				{
-					znak = 'D';
-					napis[i] = znak;
-					i++;
+					znak = '/';//na klawiaturze D
+					napis[dlugoscnapis] = znak;
+					dlugoscnapis++;
 				}
 				break;
 			}
 			case 2:
 			{
-				//znak = '#';
-				for(int c=0; c<i; c++)
-				{napis[c] = '\0';}
-				i=0;
+				//ma byc =, na klawiaturze #
+				dlugoscnapis = interpreter(napis, dlugoscnapis);
+					  
+		
 				break;
 			}
 			case 3:
 			{
-				if(i<n)
+				if(dlugoscnapis < n)
 				{
 					znak = '0';
-					napis[i] = znak;
-					i++;
+					napis[dlugoscnapis] = znak;
+					dlugoscnapis++;
 				}
 				break;
 			}
@@ -209,7 +205,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			TM_HD44780_Clear();//Clear Display
 			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port6, pin6) != RESET && i<n)
+		else if(GPIO_ReadInputDataBit(port6, pin6) != RESET && dlugoscnapis<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -220,7 +216,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 1:
 			{
-				znak = 'C';
+				znak = '*';//mnozenie, na klawiaturze C
 				break;
 			}
 			case 2:
@@ -236,12 +232,12 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			default:
 				break;
 			}
-			napis[i] = znak;
-			i++;
+			napis[dlugoscnapis] = znak;
+			dlugoscnapis++;
 			TM_HD44780_Clear();//Clear Display
 			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port7, pin7) != RESET && i<n)
+		else if(GPIO_ReadInputDataBit(port7, pin7) != RESET && dlugoscnapis<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -252,7 +248,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 1:
 			{
-				znak = 'B';
+				znak = '-';//na klawiaturze B
 				break;
 			}
 			case 2:
@@ -268,40 +264,70 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			default:
 				break;
 			}
-			napis[i] = znak;
-			i++;
+			napis[dlugoscnapis] = znak;
+			dlugoscnapis++;
 			TM_HD44780_Clear();//Clear Display
 			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port8, pin8) != RESET && i<n)
+		else if(GPIO_ReadInputDataBit(port8, pin8) != RESET && dlugoscnapis<n)
 		{
 			switch(zasilany_pin%4)
 			{
 			case 0:
 			{
-				znak = '1';
+				if(shift)
+				{//kasuj ostatni znak
+					dlugoscnapis--;
+					napis[dlugoscnapis]='\0';
+					shift=0;
+					GPIO_ResetBits(GPIOD,dioda_zielona);
+				}
+				else
+				{
+					znak = '1';
+					napis[dlugoscnapis] = znak;
+					dlugoscnapis++;
+				}
+
 				break;
 			}
 			case 1:
 			{
-				znak = 'A';
+				znak = '+';//na klawiaturze A
+				napis[dlugoscnapis] = znak;
+				dlugoscnapis++;
 				break;
 			}
 			case 2:
 			{
 				znak = '3';
+				napis[dlugoscnapis] = znak;
+				dlugoscnapis++;
 				break;
 			}
 			case 3:
 			{
-				znak = '2';
+				if(shift)
+				{//kasuj wszystkie
+					for(int c=0; c<dlugoscnapis; c++)
+					{napis[c] = '\0';}
+					dlugoscnapis=0;
+					shift=0;
+					GPIO_ResetBits(GPIOD,dioda_zielona);
+				}
+				else
+				{
+					znak = '2';
+					napis[dlugoscnapis] = znak;
+					dlugoscnapis++;
+				}
 				break;
 			}
 			default:
 				break;
 			}
-			napis[i] = znak;
-			i++;
+				   
+	   
 			TM_HD44780_Clear();//Clear Display
 			TM_HD44780_Puts(0, 0, napis);//put text on display
 		}
