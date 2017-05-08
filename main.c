@@ -39,7 +39,7 @@ GPIO_TypeDef* port7= GPIOD;
 
 uint16_t pin8= GPIO_Pin_0;
 GPIO_TypeDef* port8= GPIOD;
-
+//PB8 TIM4_CH3
 
 uint8_t zasilany_pin = 0;
 char oldznak = 0;
@@ -69,6 +69,11 @@ int main(void)
 	stmkonf_timera(TIM3, 8399, 199);//timer przelaczajacy zasilanie pomiedzy pin1 2 3 4
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
+
+	stmkonf_timera(TIM4, 839, 999);//timer od regulacji jasnosci/kontrastu wyswietlacza
+	//stmkonf_NVIC_timera(TIM4, TIM4_IRQn);
+	stmkonf_PWM_i_PD8_dla_TIM4_CH3(999, 60);
+	stmwlacz_timer(TIM4);
 
 	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);

@@ -2,7 +2,7 @@
 LCD	STM32F4xx		DESCRIPTION
 GND	GND				Ground
 VCC	+5V				Power supply for LCD
-V0	Potentiometer	Contrast voltage. Connect to potentiometer
+V0	PD8				Contrast voltage. Connect to potentiometer or PWM
 RS	PB2				Register select, can be overwritten in your project’s defines.h file
 RW	GND				Read/write
 E	PB7				Enable pin, can be overwritten in your project’s defines.h file
@@ -31,7 +31,7 @@ do której szyny APB zosta³ pod³¹czony.
 W przypadku timerów: TIM1, TIM8, TIM9, TIM10 i TIM11 ftim = fcpu = 168 MHz (szyna APB2).
 W przypadku timerów: TIM2 - TIM7, TIM12 - TIM14 ftim = fcpu/2 = 84 MHz (szyna APB1).
 
-piny wolne:
+piny zajete:
 PA0 - przycisk wbudowany
 PD12-15 diody wbudowane
 PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
