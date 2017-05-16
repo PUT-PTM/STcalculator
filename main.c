@@ -44,7 +44,7 @@ GPIO_TypeDef* port8= GPIOD;
 
 uint8_t zasilany_pin = 0;
 char znak = 0;
-char napis[31]="1+20.1*1.12+4";
+char napis[31]="1+20.1*2^12+4";
 signed int dlugoscnapis = 13;
 int shift=0;
 
@@ -70,9 +70,8 @@ int main(void)
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM4, 839, 999);//timer od regulacji jasnosci/kontrastu wyswietlacza
-	//stmkonf_NVIC_timera(TIM4, TIM4_IRQn);
-	stmkonf_PWM_i_PD8_dla_TIM4_CH3(999, 60);
+	stmkonf_timera(TIM4, 839, 99);//timer od regulacji jasnosci/kontrastu wyswietlacza
+	stmkonf_PWM_i_PB8_dla_TIM4_CH3(99, 50);
 	stmwlacz_timer(TIM4);
 
 	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
@@ -156,7 +155,6 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 {
 	if (TIM_GetITStatus(TIM5, TIM_IT_Update) != RESET)
 	{
-			   
 		if(GPIO_ReadInputDataBit(port5, pin5) != RESET)//rzad najnizszy
 		{
 			switch(zasilany_pin%4)
@@ -165,10 +163,6 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 				shift^=1;//* na klawiaturze, ma byc shift
 				GPIO_ToggleBits(GPIOD,dioda_zielona);
-				
-					 
-		 
-	 
 				break;
 			}
 			case 1:
@@ -185,15 +179,17 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 				//ma byc =, na klawiaturze #
 				dlugoscnapis = interpreter(napis, dlugoscnapis);
-					  
-		
 				break;
 			}
 			case 3:
 			{
 				if(dlugoscnapis < n)
 				{
-					znak = '0';
+					if(shift)
+					{
+						znak = '.';
+					}
+					else znak = '0';
 					napis[dlugoscnapis] = znak;
 					dlugoscnapis++;
 				}
@@ -287,6 +283,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 					znak = '1';
 					napis[dlugoscnapis] = znak;
 					dlugoscnapis++;
+					shift=0;
+					GPIO_ResetBits(GPIOD,dioda_zielona);
 				}
 
 				break;
@@ -309,7 +307,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 				if(shift)
 				{//kasuj wszystkie
-					for(int c=0; c<dlugoscnapis; c++)
+					for(int c=0; c<n; c++)
 					{napis[c] = '\0';}
 					dlugoscnapis=0;
 					shift=0;

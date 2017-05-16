@@ -155,9 +155,9 @@ void stmkonf_EXTI(uint8_t EXTIx_IRQn, uint32_t EXTI_Linex, uint8_t EXTI_PortSour
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOx, EXTI_PinSourcex);
 }
 
-void stmkonf_PWM_i_PD8_dla_TIM4_CH3(uint32_t period, int duty)//duty 0-100
+void stmkonf_PWM_i_PB8_dla_TIM4_CH3(uint32_t period, int duty)//duty 0-100
 {//dziala?
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 
 	TIM_OCInitTypeDef TIM_OC_PWM;
 	/* PWM1 Mode configuration: */
@@ -168,7 +168,7 @@ void stmkonf_PWM_i_PD8_dla_TIM4_CH3(uint32_t period, int duty)//duty 0-100
 	TIM_OC3Init(TIM4, &TIM_OC_PWM);
 	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
 
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_TIM4);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_TIM4);
 
 	GPIO_InitTypeDef GPIO_Pin_Wyjsciowy_Timera_PWM;
 	GPIO_Pin_Wyjsciowy_Timera_PWM. GPIO_Pin = GPIO_Pin_8;
@@ -176,7 +176,7 @@ void stmkonf_PWM_i_PD8_dla_TIM4_CH3(uint32_t period, int duty)//duty 0-100
 	GPIO_Pin_Wyjsciowy_Timera_PWM.GPIO_OType = GPIO_OType_PP;
 	GPIO_Pin_Wyjsciowy_Timera_PWM.GPIO_Speed = GPIO_Speed_100MHz; // max prekosc przelaczania wyprowadzen
 	GPIO_Pin_Wyjsciowy_Timera_PWM.GPIO_PuPd = GPIO_PuPd_NOPULL; // podciaganie vcc masa lub nic
-	GPIO_Init(GPIOD, &GPIO_Pin_Wyjsciowy_Timera_PWM);
+	GPIO_Init(GPIOB, &GPIO_Pin_Wyjsciowy_Timera_PWM);
 
 	TIM4->CCR3=duty*(period+1)/100; //ten rejestr mozna zmieniac dynamicznie w programie
 }

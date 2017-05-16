@@ -2,7 +2,7 @@
 LCD	STM32F4xx		DESCRIPTION
 GND	GND				Ground
 VCC	+5V				Power supply for LCD
-V0	PD8				Contrast voltage. Connect to potentiometer or PWM
+V0	GND				Contrast voltage. Connect to potentiometer or PWM
 RS	PB2				Register select, can be overwritten in your project’s defines.h file
 RW	GND				Read/write
 E	PB7				Enable pin, can be overwritten in your project’s defines.h file
@@ -14,7 +14,7 @@ D4	PC12			Data 4, can be overwritten in your project’s defines.h file
 D5	PC13			Data 5, can be overwritten in your project’s defines.h file
 D6	PB12			Data 6, can be overwritten in your project’s defines.h file
 D7	PB13			Data 7, can be overwritten in your project’s defines.h file
-A	+3V3			Backlight positive power
+A	PB8			Backlight positive power
 K	GND				Ground for backlight
 */
 
