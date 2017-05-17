@@ -44,17 +44,15 @@ GPIO_TypeDef* port8= GPIOD;
 
 uint8_t zasilany_pin = 0;
 char znak = 0;
-char napis[31]="1+20.1*2^12+4";
-signed int dlugoscnapis = 13;
+char napis_shift[2]="  ";
+char napis_display[29]="1+20.1*2^12+4";
+signed int dlugoscnapis_display = 13;
 int shift=0;
 
 int main(void)
 {
     //Initialize system
     SystemInit();
-
-	/*Natalia*/
-	stmkonf_diod_wbudowanych();
 
 	stmkonf_pinu_jako_wyjscie(port1, pin1);
 	stmkonf_pinu_jako_wyjscie(port2, pin2);
@@ -83,14 +81,12 @@ int main(void)
 	stmkonf_EXTI(EXTI1_IRQn, EXTI_Line1, EXTI_PortSourceGPIOD, EXTI_PinSource1);//przerwanie czekajace na dane z pin7
 	stmkonf_EXTI(EXTI0_IRQn, EXTI_Line0, EXTI_PortSourceGPIOD, EXTI_PinSource0);//przerwanie czekajace na dane z pin8
 
-	/*Piotr*/
     //Initialize LCD 20 cols x 4 rows
-    //TM_HD44780_Init(20, 4);
     TM_HD44780_Init(16, 2);
 
-
     //Put string to LCD
-    TM_HD44780_Puts(0, 0, napis);
+    TM_HD44780_Puts(0, 0, napis_shift);
+    TM_HD44780_Puts(2, 0, napis_display);
 
     //Show cursor
     TM_HD44780_CursorOn();
@@ -102,7 +98,6 @@ int main(void)
     {}
 }
 
-/*Natalia*/
 void EXTI3_IRQHandler ( void )//przerwanie czekajace na dane z pin5
 {
 	if (EXTI_GetITStatus(EXTI_Line3) != RESET)
@@ -162,36 +157,46 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			case 0:
 			{
 				shift^=1;//* na klawiaturze, ma byc shift
-				GPIO_ToggleBits(GPIOD,dioda_zielona);
+				if(shift)
+				{
+					napis_shift[0]='s';
+				}
+				else
+				{napis_shift[0]=' ';}//usun S z napis_displayu bo wylaczylismy shift
 				break;
 			}
 			case 1:
 			{
-				if(dlugoscnapis < n)
+				if(dlugoscnapis_display < n)
 				{
 					znak = '/';//na klawiaturze D
-					napis[dlugoscnapis] = znak;
-					dlugoscnapis++;
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
 				}
 				break;
 			}
 			case 2:
 			{
 				//ma byc =, na klawiaturze #
-				dlugoscnapis = interpreter(napis, dlugoscnapis);
+				dlugoscnapis_display = interpreter(napis_display, dlugoscnapis_display);
 				break;
 			}
 			case 3:
 			{
-				if(dlugoscnapis < n)
+				if(dlugoscnapis_display < n)
 				{
 					if(shift)
 					{
 						znak = '.';
+						shift=0;
+						napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 					}
-					else znak = '0';
-					napis[dlugoscnapis] = znak;
-					dlugoscnapis++;
+					else
+					{
+						znak = '0';
+					}
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
 				}
 				break;
 			}
@@ -199,9 +204,10 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				break;
 			}
 			TM_HD44780_Clear();//Clear Display
-			TM_HD44780_Puts(0, 0, napis);//put text on display
+		    TM_HD44780_Puts(0, 0, napis_shift);
+		    TM_HD44780_Puts(2, 0, napis_display);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port6, pin6) != RESET && dlugoscnapis<n)
+		else if(GPIO_ReadInputDataBit(port6, pin6) != RESET && dlugoscnapis_display<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -212,7 +218,16 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 1:
 			{
-				znak = '*';//mnozenie, na klawiaturze C
+				if(shift)
+				{
+					znak = '^';
+					shift=0;
+					napis_shift[0]=' ';//usun s z napis_shift bo wylaczylismy shift
+				}
+				else
+				{
+					znak = '*';//mnozenie, na klawiaturze C
+				}
 				break;
 			}
 			case 2:
@@ -228,12 +243,13 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			default:
 				break;
 			}
-			napis[dlugoscnapis] = znak;
-			dlugoscnapis++;
+			napis_display[dlugoscnapis_display] = znak;
+			dlugoscnapis_display++;
 			TM_HD44780_Clear();//Clear Display
-			TM_HD44780_Puts(0, 0, napis);//put text on display
+		    TM_HD44780_Puts(0, 0, napis_shift);
+		    TM_HD44780_Puts(2, 0, napis_display);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port7, pin7) != RESET && dlugoscnapis<n)
+		else if(GPIO_ReadInputDataBit(port7, pin7) != RESET && dlugoscnapis_display<n)
 		{
 			switch(zasilany_pin%4)
 			{
@@ -260,12 +276,13 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			default:
 				break;
 			}
-			napis[dlugoscnapis] = znak;
-			dlugoscnapis++;
+			napis_display[dlugoscnapis_display] = znak;
+			dlugoscnapis_display++;
 			TM_HD44780_Clear();//Clear Display
-			TM_HD44780_Puts(0, 0, napis);//put text on display
+		    TM_HD44780_Puts(0, 0, napis_shift);
+		    TM_HD44780_Puts(2, 0, napis_display);//put text on display
 		}
-		else if(GPIO_ReadInputDataBit(port8, pin8) != RESET && dlugoscnapis<n)
+		else if(GPIO_ReadInputDataBit(port8, pin8) != RESET)//////////////////////////////////////////
 		{
 			switch(zasilany_pin%4)
 			{
@@ -273,34 +290,41 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 				if(shift)
 				{//kasuj ostatni znak
-					dlugoscnapis--;
-					napis[dlugoscnapis]='\0';
+					dlugoscnapis_display--;
+					napis_display[dlugoscnapis_display]='\0';
 					shift=0;
-					GPIO_ResetBits(GPIOD,dioda_zielona);
+					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 				}
 				else
 				{
-					znak = '1';
-					napis[dlugoscnapis] = znak;
-					dlugoscnapis++;
-					shift=0;
-					GPIO_ResetBits(GPIOD,dioda_zielona);
+					if(dlugoscnapis_display < n)
+					{
+						znak = '1';
+						napis_display[dlugoscnapis_display] = znak;
+						dlugoscnapis_display++;
+					}
 				}
 
 				break;
 			}
 			case 1:
 			{
-				znak = '+';//na klawiaturze A
-				napis[dlugoscnapis] = znak;
-				dlugoscnapis++;
+				if(dlugoscnapis_display < n)
+				{
+					znak = '+';//na klawiaturze A
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			case 2:
 			{
-				znak = '3';
-				napis[dlugoscnapis] = znak;
-				dlugoscnapis++;
+				if(dlugoscnapis_display < n)
+				{
+					znak = '3';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			case 3:
@@ -308,16 +332,19 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				if(shift)
 				{//kasuj wszystkie
 					for(int c=0; c<n; c++)
-					{napis[c] = '\0';}
-					dlugoscnapis=0;
+					{napis_display[c] = '\0';}
+					dlugoscnapis_display=0;
 					shift=0;
-					GPIO_ResetBits(GPIOD,dioda_zielona);
+					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 				}
 				else
 				{
-					znak = '2';
-					napis[dlugoscnapis] = znak;
-					dlugoscnapis++;
+					if(dlugoscnapis_display < n)
+					{
+						znak = '2';
+						napis_display[dlugoscnapis_display] = znak;
+						dlugoscnapis_display++;
+					}
 				}
 				break;
 			}
@@ -327,7 +354,8 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				   
 	   
 			TM_HD44780_Clear();//Clear Display
-			TM_HD44780_Puts(0, 0, napis);//put text on display
+		    TM_HD44780_Puts(0, 0, napis_shift);
+		    TM_HD44780_Puts(2, 0, napis_display);//put text on display
 		}
 		EXTI_ClearITPendingBit(EXTI_Line3);// wyzerowanie flagi wyzwolonego przerwania
 		EXTI_ClearITPendingBit(EXTI_Line2);// wyzerowanie flagi wyzwolonego przerwania

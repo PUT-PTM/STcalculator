@@ -1,6 +1,6 @@
 ﻿#include <math.h>
 #include <stdio.h>
-const int n=31;//max number of characters
+const int n=29;//max number of characters
 int interpreter (char napis[], int dlugoscnapis)
 {
 	/*
@@ -10,10 +10,10 @@ int interpreter (char napis[], int dlugoscnapis)
 	wykonujemy adekwatne do tego operacje
 	itd itd
 	*/
-	double liczby[30]={0};//
-	char znaki[30]={0};//
-	int licznik_liczb = 0;//
-	int licznik_znakow = 0;//
+	double liczby[30]={0};
+	char znaki[30]={0};
+	int licznik_liczb = 0;
+	int licznik_znakow = 0;
 	//zamiana z wejsciowej tablicy charow na liczby oraz znaki matematyczne
 	for(int i=0; i<dlugoscnapis; i++)//szukamy mnozenia lub dzielenia
 	{
@@ -143,12 +143,11 @@ int interpreter (char napis[], int dlugoscnapis)
             i--;
         }
     }
-    double wynikdouble;
-    /////////////////////////////////////
+
     //zamiania z double na tablice charow
-    wynikdouble=liczby[0];
+    double wynikdouble=liczby[0];
     int part1=wynikdouble;//bedzie reprezentowac czesc calkowita
-    char wynikchar1[31]={0};//bedzie reprezentowac czesc calkowita
+    char wynikchar1[30]={0};//bedzie reprezentowac czesc calkowita
     //zapisanie wyniku jako tablica char
     //szukamy czesci calkowitej
 	int dlugoscchar1=0;
@@ -165,7 +164,7 @@ int interpreter (char napis[], int dlugoscnapis)
 
     //szukamy czesci po przecinku
     double part2=wynikdouble;//bedzie reprezentowac czesc po przecinku
-    char wynikchar2[31]={0};//bedzie reprezentowac czesc po przecinku
+    char wynikchar2[30]={0};//bedzie reprezentowac czesc po przecinku
     part2 -= floor(part2);//odejmujemy zeby zostala tylko czes po przecinku
     int dlugoscchar2=0;
 	for(int i=0; part2 != 0 && i<5 ; i++)//dokladnosc do 5 miejsca po przecinku
@@ -189,7 +188,7 @@ int interpreter (char napis[], int dlugoscnapis)
         }
     }
 
-    //czuszczenie tablicy znakow i napisu
+    //czyszczenie tablicy znakow i napisu
     for(int i=0; i<n; i++)
     {
     	napis[i]=0;
@@ -197,31 +196,50 @@ int interpreter (char napis[], int dlugoscnapis)
     }
 
     //skladanie dwoch tablic w jedna
-    int dlugoscchar= dlugoscchar1 + dlugoscchar2+1;
+    int dlugoscchar= dlugoscchar1 + dlugoscchar2 + 1;
 
-    //przepisanie pierwszej tablicy do wyniku
-    int licz;
-    for(licz=0; licz<dlugoscchar1; licz++)
+    if(wynikdouble>pow(2,31))
     {
-     	napis[licz]=wynikchar1[licz];
+    	napis[0]='e';
+    	napis[1]='r';
+    	napis[2]='r';
+    	napis[3]='o';
+    	napis[4]='r';
+    	return 5;
     }
-
-    //dodanie kropki
-    napis[licz]='.';
-    licz++;
-
-    //przepisanie drugiej tablicy do wyniku
-    for(int i=0; i<dlugoscchar2; i++, licz++)
+    else
     {
-    	napis[licz]=wynikchar2[i];
-    }
 
-    //jesli nie ma wartosci po przecinku to trzeba wyswietlic chociaz jedno zero
-    if(napis[dlugoscchar-1] == '.')
-    {
-    	napis[licz]='0';
+    	while(dlugoscchar>n)
+    	{//jesli wynik jest dluzszy niz da sie wyswietlic na ekranie to zmniejsz dokladnosc po przecinku
+    		dlugoscchar--;
+    		dlugoscchar2--;
+    	}
+
+    	//przepisanie pierwszej tablicy do wyniku
+    	int licz;
+    	for(licz=0; licz<dlugoscchar1; licz++)
+    	{
+     		napis[licz]=wynikchar1[licz];
+    	}
+
+    	//dodanie kropki
+    	napis[licz]='.';
     	licz++;
-    	dlugoscchar++;
-    }
+
+    	//przepisanie drugiej tablicy do wyniku
+    	for(int i=0; i<dlugoscchar2; i++, licz++)
+    	{
+    		napis[licz]=wynikchar2[i];
+    	}
+
+    	//jesli nie ma wartosci po przecinku to trzeba wyswietlic chociaz jedno zero
+    	if(napis[dlugoscchar-1] == '.')
+    	{
+    		napis[licz]='0';
+    		licz++;
+    		dlugoscchar++;
+    	}
     return dlugoscchar;
+    }
 }
