@@ -45,8 +45,10 @@ GPIO_TypeDef* port8= GPIOD;
 uint8_t zasilany_pin = 0;
 char znak = 0;
 char napis_shift[2]="  ";
-char napis_display[29]="1+20.1*2^12+4";
-signed int dlugoscnapis_display = 13;
+//char napis_display[29]="1+20.1*2^12+4";
+//signed int dlugoscnapis_display = 13;
+char napis_display[29]="2*sin30+cos60-tg45*ctg45";
+signed int dlugoscnapis_display = 24;
 int shift=0;
 
 int main(void)
@@ -255,29 +257,89 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 			case 0:
 			{
-				znak = '4';
+				if(shift)
+				{
+					napis_display[dlugoscnapis_display] = 's';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 'i';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 'n';
+					dlugoscnapis_display++;
+					shift=0;
+					napis_shift[0]=' ';//usun s z napis_shift bo wylaczylismy shift
+				}
+				else
+				{
+					znak = '4';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			case 1:
 			{
-				znak = '-';//na klawiaturze B
+				if(shift)
+				{
+					napis_display[dlugoscnapis_display] = 'c';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 't';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 'g';
+					dlugoscnapis_display++;
+					shift=0;
+					napis_shift[0]=' ';//usun s z napis_shift bo wylaczylismy shift
+				}
+				else
+				{
+					znak = '-';//na klawiaturze B
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			case 2:
 			{
-				znak = '6';
+				if(shift)
+				{
+					napis_display[dlugoscnapis_display] = 't';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 'g';
+					dlugoscnapis_display++;
+					shift=0;
+					napis_shift[0]=' ';//usun s z napis_shift bo wylaczylismy shift
+				}
+				else
+				{
+					znak = '6';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			case 3:
 			{
-				znak = '5';
+				if(shift)
+				{
+					napis_display[dlugoscnapis_display] = 'c';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 'o';
+					dlugoscnapis_display++;
+					napis_display[dlugoscnapis_display] = 's';
+					dlugoscnapis_display++;
+					shift=0;
+					napis_shift[0]=' ';//usun s z napis_shift bo wylaczylismy shift
+				}
+				else
+				{
+					znak = '5';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
+				}
 				break;
 			}
 			default:
 				break;
 			}
-			napis_display[dlugoscnapis_display] = znak;
-			dlugoscnapis_display++;
 			TM_HD44780_Clear();//Clear Display
 		    TM_HD44780_Puts(0, 0, napis_shift);
 		    TM_HD44780_Puts(2, 0, napis_display);//put text on display
@@ -291,7 +353,20 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 				if(shift)
 				{//kasuj ostatni znak
 					dlugoscnapis_display--;
-					napis_display[dlugoscnapis_display]='\0';
+
+					if(napis_display[dlugoscnapis_display]>='a' && napis_display[dlugoscnapis_display]<='z')
+					{
+						while(napis_display[dlugoscnapis_display]>='a' && napis_display[dlugoscnapis_display]<='z')
+						{
+							napis_display[dlugoscnapis_display]='\0';
+							dlugoscnapis_display--;
+						}
+						dlugoscnapis_display++;
+					}
+					else
+					{
+						napis_display[dlugoscnapis_display]='\0';
+					}
 					shift=0;
 					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 				}
