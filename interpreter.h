@@ -371,14 +371,16 @@ int interpreter (char napis[], int dlugoscnapis)
 	            i--;
 	        }
 	    }
+	    //szukamy odejmowania
 	    for(int i = 0; i< licznik_znakow; i++)
 	    {
 	        if(znaki[i] == '-')
 	        {
-	            liczby[i+1]-=liczby[i];
-	            if( liczby[i]>-0.00001 && liczby[i]<0.00001)
+	            liczby[i]-=liczby[i+1];
+	            liczby[i+1]=liczby[i];//przepisanie ich w celu lepszego przesuwania
+	            if( liczby[i+1]>-0.00001 && liczby[i+1]<0.00001)
 	            {
-	                liczby[i]=0;
+	                liczby[i+1]=0;
 	            }
 	    		for(int j=i; j<licznik_liczb; j++)
 	    		{
@@ -408,14 +410,31 @@ int interpreter (char napis[], int dlugoscnapis)
 	    }
 	    else
 	    {
+	        int czy_ujemna=0;
+	        if(part1<0)//jesli liczba ujemna to zamieniamy na dodatnia
+	        {
+	            czy_ujemna=1;
+	            part1*=(-1);
+	        }
 	        while(part1 != 0)
 	        {
 	            for(int i=dlugoscchar1-1; i>=0; i--)
 	            {
+	                //cout << "\n!!!wynikchar1["<< i << "] = "<< wynikchar1[i];
 	                wynikchar1[i+1] = wynikchar1[i];
 	            }
 	            wynikchar1[0] = (part1%10) + '0';
 	            part1 /= 10;
+	            dlugoscchar1++;
+	        }
+	        if(czy_ujemna)
+	        {
+	            for(int i=dlugoscchar1-1; i>=0; i--)
+	            {
+	                //cout << "\n!!!wynikchar1["<< i << "] = "<< wynikchar1[i];
+	                wynikchar1[i+1] = wynikchar1[i];
+	            }
+	            wynikchar1[0] = '-';
 	            dlugoscchar1++;
 	        }
 	    }
@@ -427,7 +446,7 @@ int interpreter (char napis[], int dlugoscnapis)
 	    int dlugoscchar2=0;
 		for(int i=0; part2 != 0 && i<5 ; i++)//dokladnosc do 5 miejsca po przecinku
 	    {
-	        part2 *= 10;//przesuwamy wartozs za przecinkiem przed przecinek
+	        part2 *= 10;//przesuwamy wartosc za przecinkiem przed przecinek
 	        wynikchar2[i] = floor(part2) + '0';
 	        part2 = part2 - floor(part2);//odejmujemy zeby zostala tylko czes po przecinku
 	        dlugoscchar2++;
