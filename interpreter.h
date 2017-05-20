@@ -136,10 +136,26 @@ int interpreter (char napis[], int dlugoscnapis)
 	    {
 	        if(znaki[i]=='q')
 	        {//zabezpiczenie bo ************* przy jego braku w sensie sin(180) i wielokrotnosci
-	            if(((int)(liczby[i+1]) %180 )== 0)
+	            if(((int)(liczby[i+1]) %180 ) == 0)
 	            {
 	                liczby[i]=0;//bo sinus powoduje ze w tablicy liczb pojawia sie puste miejsce
 	            }
+	            else if(((int)(liczby[i+1]+30) %360 ) == 0)//jesli to sin-30
+	            	{
+	            	    liczby[i]=-0.5;
+                    }
+	            else if(((int)(liczby[i+1]-30) %360 ) == 0)//jesli to sin30
+	            	{
+	            	    liczby[i]=0.5;
+	            	}
+	            else if(((int)(liczby[i+1]+150) %360 ) == 0)//jesli to sin150
+	            	{
+	            	    liczby[i]=-0.5;
+                    }
+	            else if(((int)(liczby[i+1]-150) %360 ) == 0)//jesli to sin-150
+	            	{
+	            	    liczby[i]=0.5;
+                    }
 	            else
 	                liczby[i]=(sin(liczby[i+1]*M_PI/180.0f));
 
@@ -163,15 +179,28 @@ int interpreter (char napis[], int dlugoscnapis)
 	    {
 	        if(znaki[i]=='w')
 	        {//zabezpiczenie bo ************* przy jego braku w sensie cos(90) + 180k
-	            if( (((int)(liczby[i+1])+90) %180 )== 0)
+	            if( (((int)(liczby[i+1])-90) %180 ) == 0)
 	            {
 	                liczby[i]=0;//bo sinus powoduje ze w tablicy liczb pojawia sie puste miejsce
 	            }
+	            else if(((int)(liczby[i+1]+60) %360 ) == 0)//jesli to sin-30
+	            	{
+	            	    liczby[i]=0.5;
+                    }
+	            else if(((int)(liczby[i+1]-60) %360 ) == 0)//jesli to sin30
+	            	{
+	            	    liczby[i]=0.5;
+	            	}
+	            else if(((int)(liczby[i+1]+120) %360 ) == 0)//jesli to sin150
+	            	{
+	            	    liczby[i]=-0.5;
+                    }
+	            else if(((int)(liczby[i+1]-120) %360 ) == 0)//jesli to sin-150
+	            	{
+	            	    liczby[i]=-0.5;
+                    }
 	            else
 	                liczby[i]=(cos(liczby[i+1]*M_PI/180.0f));
-
-	            if(liczby[i]<0.001)
-	                liczby[i]=0;
 
 	            //przesuwamy reszte liczb i znakow w lewo
 	            for(int x=i+1; x<licznik_liczb; x++)
@@ -401,6 +430,14 @@ int interpreter (char napis[], int dlugoscnapis)
 	    int part1=wynikdouble;//bedzie reprezentowac czesc calkowita
 	    char wynikchar1[29]={0};//bedzie reprezentowac czesc calkowita
 	    //zapisanie wyniku jako tablica char
+
+        int czy_ujemna=0;
+	    if(wynikdouble<0)//jesli liczba ujemna to zamieniamy na dodatnia
+	    {
+	        czy_ujemna=1;
+	        part1*=(-1);
+	    }
+
 	    //szukamy czesci calkowitej
 		int dlugoscchar1=0;
 		if(part1 == 0)
@@ -410,34 +447,27 @@ int interpreter (char napis[], int dlugoscnapis)
 	    }
 	    else
 	    {
-	        int czy_ujemna=0;
-	        if(part1<0)//jesli liczba ujemna to zamieniamy na dodatnia
-	        {
-	            czy_ujemna=1;
-	            part1*=(-1);
-	        }
 	        while(part1 != 0)
 	        {
 	            for(int i=dlugoscchar1-1; i>=0; i--)
 	            {
-	                //cout << "\n!!!wynikchar1["<< i << "] = "<< wynikchar1[i];
 	                wynikchar1[i+1] = wynikchar1[i];
 	            }
 	            wynikchar1[0] = (part1%10) + '0';
 	            part1 /= 10;
 	            dlugoscchar1++;
 	        }
-	        if(czy_ujemna)
-	        {
-	            for(int i=dlugoscchar1-1; i>=0; i--)
-	            {
-	                //cout << "\n!!!wynikchar1["<< i << "] = "<< wynikchar1[i];
-	                wynikchar1[i+1] = wynikchar1[i];
-	            }
-	            wynikchar1[0] = '-';
-	            dlugoscchar1++;
-	        }
 	    }
+
+        if(czy_ujemna)
+        {
+            for(int i=dlugoscchar1-1; i>=0; i--)
+            {
+                wynikchar1[i+1] = wynikchar1[i];
+            }
+            wynikchar1[0] = '-';
+            dlugoscchar1++;
+        }
 
 	    //szukamy czesci po przecinku
 	    double part2=wynikdouble;//bedzie reprezentowac czesc po przecinku

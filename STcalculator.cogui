@@ -30,9 +30,9 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/main.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5340" selectionTopPixel="2476"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="interpreter.h" partName="interpreter.h" path="D:/STcalculator - Copy/interpreter.h" title="interpreter.h" tooltip="D:/STcalculator - Copy/interpreter.h" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="interpreter.h" partName="interpreter.h" path="D:/STcalculator/interpreter.h" title="interpreter.h" tooltip="D:/STcalculator/interpreter.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/interpreter.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="10831" selectionTopPixel="6039"/>
+<editorState selectionHorizontalPixel="0" selectionLength="14640" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.ui.DefaultTextEditor" name="help.txt" partName="help.txt" path="D:/STcalculator/help.txt" title="help.txt" tooltip="D:/STcalculator/help.txt" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/STcalculator/help.txt"/>
