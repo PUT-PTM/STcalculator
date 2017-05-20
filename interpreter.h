@@ -1,6 +1,7 @@
 ﻿#include <math.h>
 #include <stdio.h>
 const int n=29;//max number of characters
+const char pierwiastek = 232;
 int interpreter (char napis[], int dlugoscnapis)
 {
 	double liczby[29]={0};
@@ -115,15 +116,15 @@ int interpreter (char napis[], int dlugoscnapis)
 	                temp/=10;
 	            }
 	            liczby[i+1] +=liczby[i];
-	            for(int j = i; j<licznik_znakow; j++)
-	            {
-	                //cout << "\nStara liczba " << liczby[j] << "->" << liczby[j+1];
-	                liczby[j] = liczby[j+1];
-	                //cout << "\nStary znak " << znaki[j] << "->" << znaki[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }
@@ -143,16 +144,15 @@ int interpreter (char napis[], int dlugoscnapis)
 	                liczby[i]=(sin(liczby[i+1]*M_PI/180.0f));
 
 	            //przesuwamy reszte liczb i znakow w lewo
-	            for(int x=i+1; x<licznik_liczb; x++)
-	            {
-	                liczby[x]=liczby[x+1];
-	            }
-	            licznik_liczb--;
-
-	            for(int b=i; b<licznik_znakow; b++)
-	            {
-	                znaki[b]=znaki[b+1];
-	            }
+	    		for(int j=i+1; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }
@@ -259,7 +259,7 @@ int interpreter (char napis[], int dlugoscnapis)
 	                if(liczby[i]<0.001 || liczby[i]>1000)
 	                    liczby[i]=0;
 
-	                for(int x=i+1; x<licznik_liczb;x++)
+	                for(int x=i+1; x<licznik_liczb; x++)
 	                {
 	                    liczby[x]=liczby[x+1];
 	                }
@@ -276,34 +276,61 @@ int interpreter (char napis[], int dlugoscnapis)
 	    }
 	    ///////////////////////////////////////////////////////////
 
+	    // PIERWIASTKOWANIE
+	    for(int i=0; i<licznik_znakow; i++)
+	    {
+	    	if(znaki[i]==pierwiastek)//moze 124, 162, 218, 232
+	    	{
+	    		liczby[i]=sqrt( liczby[i+1] );
+	    		for(int j=i+1; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
+	    		licznik_znakow--;
+	            i--;
+	    	}
+	    }
+
+	    //potegowanie
 	    for(int i = 0; i< licznik_znakow; i++)
 	    {
 	        if(znaki[i] == '^')
 	        {
 	            liczby[i+1]=pow(liczby[i], liczby[i+1]);
-	            for(int j = i; j<licznik_znakow; j++)
-	            {
-	                liczby[j] = liczby[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }
 	    }
+
+	    //mnozenie
 	    for(int i = 0; i< licznik_znakow; i++)
 	    {
 	        if(znaki[i] == '*')
 	        {
 	            liczby[i+1]*=liczby[i];
-	            for(int j = i; j<licznik_znakow; j++)
-	            {
-	                liczby[j] = liczby[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }
@@ -313,14 +340,17 @@ int interpreter (char napis[], int dlugoscnapis)
 	        if(znaki[i] == '/')
 	        {
 	            liczby[i+1]/=liczby[i];
-	            for(int j = i; j<licznik_znakow; j++)
-	            {
-	                liczby[j] = liczby[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
-	            licznik_znakow--;i--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
+	            licznik_znakow--;
+	            i--;
 	        }
 	    }
 	    for(int i = 0; i< licznik_znakow; i++)
@@ -328,13 +358,15 @@ int interpreter (char napis[], int dlugoscnapis)
 	        if(znaki[i] == '+')
 	        {
 	            liczby[i+1]+=liczby[i];
-	            for(int j = i; j<licznik_znakow; j++)
-	            {
-	                liczby[j] = liczby[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }
@@ -343,18 +375,20 @@ int interpreter (char napis[], int dlugoscnapis)
 	    {
 	        if(znaki[i] == '-')
 	        {
-	            liczby[i]-=liczby[i+1];
+	            liczby[i+1]-=liczby[i];
 	            if( liczby[i]>-0.00001 && liczby[i]<0.00001)
 	            {
 	                liczby[i]=0;
 	            }
-	            for(int j = i+1; j<licznik_znakow; j++)
-	            {
-	                liczby[j] = liczby[j+1];
-	                znaki[j] = znaki[j+1];
-	            }
-	            //trzeba zmniejszyc licznik liczb i znakow
-	            licznik_liczb--;
+	    		for(int j=i; j<licznik_liczb; j++)
+	    		{
+	    			liczby[j]=liczby[j+1];
+	    		}
+	    		licznik_liczb--;
+	    		for(int j=i; j<licznik_znakow; j++)
+	    		{
+	    			znaki[j]=znaki[j+1];
+	    		}
 	            licznik_znakow--;
 	            i--;
 	        }

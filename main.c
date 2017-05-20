@@ -86,6 +86,7 @@ int main(void)
     //Initialize LCD 20 cols x 4 rows
     TM_HD44780_Init(16, 2);
 
+	TM_HD44780_Clear();//Clear Display
     //Put string to LCD
     TM_HD44780_Puts(0, 0, napis_shift);
     TM_HD44780_Puts(2, 0, napis_display);
@@ -158,7 +159,7 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 			case 0:
 			{
-				shift^=1;//* na klawiaturze, ma byc shift
+				shift^=1;// * na klawiaturze, ma byc shift
 				if(shift)
 				{
 					napis_shift[0]='s';
@@ -171,7 +172,16 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			{
 				if(dlugoscnapis_display < n)
 				{
-					znak = '/';//na klawiaturze D
+					if(shift)
+					{
+						znak = pierwiastek; //symbol pierwiastkowania
+						shift=0;
+						napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
+					}
+					else
+					{
+						znak = '/';//na klawiaturze D
+					}
 					napis_display[dlugoscnapis_display] = znak;
 					dlugoscnapis_display++;
 				}
