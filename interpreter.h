@@ -238,6 +238,23 @@ int interpreter (char napis[], int dlugoscnapis)
 	                napis[4]='r';
 	                return 5;
 	            }
+	            else if( (((int)(liczby[i+1]) - 45) %180 ) == 0)//tg45
+	            {
+	                liczby[i]=1.0;
+
+	                for(int x=i+1; x<licznik_liczb; x++)
+	                {
+	                    liczby[x]=liczby[x+1];
+	                }
+	                licznik_liczb--;
+
+	                for(int b=i; b<licznik_znakow; b++)
+	                {
+	                    znaki[b]=znaki[b+1];
+	                }
+	                licznik_znakow--;
+	                i--;
+	            }
 	            else
 	            {
 	                liczby[i]=(tan(liczby[i+1]*M_PI/180.0f));
