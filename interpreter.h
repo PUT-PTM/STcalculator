@@ -125,7 +125,7 @@ int interpreter (char napis[], int dlugoscnapis)
     }
     kierunek = 0;
     potega = 1;
-qlicznik_liczb++;//zeby uwzglednil ostatnia liczbe w rownaniu
+    licznik_liczb++;//zeby uwzglednil ostatnia liczbe w rownaniu
 
 	//zamienia z int na liczby z przecinkami
 	for(int i = 0; i< licznik_znakow; i++)
