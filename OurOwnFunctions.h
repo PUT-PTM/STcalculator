@@ -206,3 +206,21 @@ void stmkonf_PWM_i_PB0_dla_TIM3_CH3(uint32_t period, int duty)
 
 	TIM3->CCR3=duty*(period+1)/100; //ten rejestr mozna zmieniac dynamicznie w programie
 }
+
+int simple_charstring_to_int(char napis[], int dlugoscnapis)
+{
+	int number=0;
+	//zamiana z wejsciowej tablicy charow na liczby oraz znaki matematyczne
+	for(int i=0; i<dlugoscnapis; i++)//szukamy mnozenia lub dzielenia
+	{
+		if(napis[i] >='0' && napis[i]<='9')
+		{
+			number=number*10 + napis[i]-'0';
+		}
+		else
+        {
+			break;
+		}
+	}
+    return number;
+}

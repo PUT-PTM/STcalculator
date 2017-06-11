@@ -42,6 +42,8 @@ uint16_t pin8= GPIO_Pin_0;//left keyboard pin
 GPIO_TypeDef* port8= GPIOD;
 
 
+int display_period = 99;
+int contrast_period = 39;
 uint8_t zasilany_pin = 0;
 char znak = 0;
 char napis_shift[2]="  ";
@@ -70,12 +72,12 @@ int main(void)
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM4, 839, 99);//timer od regulacji jasnosci wyswietlacza
-	stmkonf_PWM_i_PB8_dla_TIM4_CH3(99, 50);
+	stmkonf_timera(TIM4, 839, display_period);//timer od regulacji jasnosci wyswietlacza
+	stmkonf_PWM_i_PB8_dla_TIM4_CH3(display_period, 50);
 	stmwlacz_timer(TIM4);
 
-	stmkonf_timera(TIM3, 839, 49);//timer od regulacji kontrastu znakow
-	stmkonf_PWM_i_PB0_dla_TIM3_CH3(49, 30);
+	stmkonf_timera(TIM3, 839, contrast_period);//timer od regulacji kontrastu znakow
+	stmkonf_PWM_i_PB0_dla_TIM3_CH3(contrast_period, 30);
 	stmwlacz_timer(TIM3);
 
 	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
@@ -384,21 +386,25 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 					shift=0;
 					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 				}
-				else
+				else if(dlugoscnapis_display < n)
 				{
-					if(dlugoscnapis_display < n)
-					{
-						znak = '1';
-						napis_display[dlugoscnapis_display] = znak;
-						dlugoscnapis_display++;
-					}
+					znak = '1';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
 				}
 
 				break;
 			}
 			case 1:
 			{
-				if(dlugoscnapis_display < n)
+				if(shift)
+				{
+					int duty = simple_charstring_to_int(napis_display, dlugoscnapis_display);
+					TIM3->CCR3=duty*(contrast_period+1)/100;//timer od regulacji kontrastu znakow
+					shift=0;
+					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
+				}
+				else if(dlugoscnapis_display < n)
 				{
 					znak = '+';//na klawiaturze A
 					napis_display[dlugoscnapis_display] = znak;
@@ -408,7 +414,14 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 			}
 			case 2:
 			{
-				if(dlugoscnapis_display < n)
+				if(shift)
+				{
+					int duty = simple_charstring_to_int(napis_display, dlugoscnapis_display);
+					TIM4->CCR3=duty*(display_period+1)/100;//timer od regulacji jasnosci wyswietlacza
+					shift=0;
+					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
+				}
+				else if(dlugoscnapis_display < n)
 				{
 					znak = '3';
 					napis_display[dlugoscnapis_display] = znak;
@@ -426,14 +439,11 @@ void TIM5_IRQHandler ( void )//czeka 1/8 sekundy i dopiero sprawdza stan pinu// 
 					shift=0;
 					napis_shift[0]=' ';//usun S z napis_displayu bo wylaczylismy shift
 				}
-				else
+				else if(dlugoscnapis_display < n)
 				{
-					if(dlugoscnapis_display < n)
-					{
-						znak = '2';
-						napis_display[dlugoscnapis_display] = znak;
-						dlugoscnapis_display++;
-					}
+					znak = '2';
+					napis_display[dlugoscnapis_display] = znak;
+					dlugoscnapis_display++;
 				}
 				break;
 			}
