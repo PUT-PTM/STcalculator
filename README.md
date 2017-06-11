@@ -9,7 +9,7 @@ STM32F407VG microcontroller,
 HD44780 display,
 Membrane 4x4 Matrix Array keyboard
 
-The heart of this device is microcontroller STM32F4 Discovery. We use LCD HD44780 to display numbers and everything else. To enter numbers we use a membrane keypad. All these things form the whole and are enclosed in a printed 3D cover.
+The heart of this device is microcontroller STM32F4 Discovery. We use LCD HD44780 to display numbers and everything else. To enter numbers we use a membrane keypad.
 
 Tools
 Software that we use is CooCox CoIDE Version: 1.7.8
@@ -21,13 +21,11 @@ How to compile
 There are no any special things to do. Just copy the project.
 
 Future improvements
-There is no any bugs. There is a 0.0001 precision.
-You can add brackets for example to calculate something like this(2+2)*2=8
+There is no any bugs. There is a 0.00001 precision.
+You can add brackets for example to calculate something like this(2+2)*2=8 or binary<->decimal conversion.
 
 Attributions
 To handle with printing in LCD we use graphic library https://github.com/emusan/stm32f4-charlcd
-To handle with convert decimal to binary and binary to decimal we use functions convertBinaryToDecimal() and  convertDecimalToBinary() from
-https://www.programiz.com/c-programming/examples/binary-decimal-convert
 
 License
 You are using this project at your own risk.
