@@ -16,25 +16,17 @@ D6	PB12			Data 6, can be overwritten in your project’s defines.h file
 D7	PB13			Data 7, can be overwritten in your project’s defines.h file
 A	PB8			Backlight positive power
 K	GND				Ground for backlight
-*/
-
-/*
 
 
-timery:
-Timery 2-5 oraz 9-14 - timery ogólnego przeznaczenia
-Timery 6 i 7 - podstawowe peryferia o najprostszych funkcjach
-Timery 1 i 8 - zaawansowane timery do najbardziej z³o¿onych zadañ
-
-Maksymalna czêstotliwoœæ inkrementacji/dekrementacji timera zale¿y od tego
-do której szyny APB zosta³ pod³¹czony.
-W przypadku timerów: TIM1, TIM8, TIM9, TIM10 i TIM11 ftim = fcpu = 168 MHz (szyna APB2).
-W przypadku timerów: TIM2 - TIM7, TIM12 - TIM14 ftim = fcpu/2 = 84 MHz (szyna APB1).
-
-piny zajete:
-PA0 - przycisk wbudowany
-PD12-15 diody wbudowane
-PD5 - USB LD8: red LED indicates an overcurrent from VBUS of CN5 and is connected to the I/O PD5 of the STM32F407VGT6.
-
+keyboard
++-------+-------+------+--------+
+|  1 CE |  2 C  |   3  |    +   |
++-------+-------+------+--------+
+| 4 sin | 5 cos | 6 tg |  - ctg |
++-------+-------+------+--------+
+|   7   |   8   |   9  |   * ^  |
++-------+-------+------+--------+
+| Shift |  0 .  |   =  | / sqrt |
++-------+-------+------+--------+
 */
 

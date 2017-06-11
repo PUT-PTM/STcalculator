@@ -14,8 +14,8 @@
 #include "interpreter.h"
 
 //keypad
-//bez przerwan
-uint16_t pin1= GPIO_Pin_4;
+//without interrupts, columns
+uint16_t pin1= GPIO_Pin_4; //right keyboard pin
 GPIO_TypeDef* port1= GPIOB;
 
 uint16_t pin2= GPIO_Pin_5;
@@ -28,7 +28,7 @@ uint16_t pin4= GPIO_Pin_6;
 GPIO_TypeDef* port4= GPIOD;
 
 
-//z przerwaniami
+//with interrupts, rows
 uint16_t pin5= GPIO_Pin_3;
 GPIO_TypeDef* port5= GPIOA;
 
@@ -38,17 +38,17 @@ GPIO_TypeDef* port6= GPIOD;
 uint16_t pin7= GPIO_Pin_1;
 GPIO_TypeDef* port7= GPIOD;
 
-uint16_t pin8= GPIO_Pin_0;
+uint16_t pin8= GPIO_Pin_0;//left keyboard pin
 GPIO_TypeDef* port8= GPIOD;
 
 
 uint8_t zasilany_pin = 0;
 char znak = 0;
 char napis_shift[2]="  ";
-//char napis_display[29]="1+20.1*2^12+4";
-//signed int dlugoscnapis_display = 13;
-char napis_display[29]="2*sin30+cos60-tg45*ctg45";
-signed int dlugoscnapis_display = 24;
+char napis_display[29]="1+20.1*2^3+4";
+signed int dlugoscnapis_display = 12;
+//char napis_display[29]="2*sin30+cos60-tg45*ctg45";
+//signed int dlugoscnapis_display = 24;
 int shift=0;
 
 int main(void)

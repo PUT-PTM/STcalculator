@@ -151,7 +151,7 @@ int interpreter (char napis[], int dlugoscnapis)
     for(int i=0; i<licznik_znakow; i++)
     {
     	if(znaki[i]=='q')
-        {//zabezpiczenie bo ************* przy jego braku w sensie sin(180) i wielokrotnosci
+        {
             if(((int)(liczby[i+1]) %180 ) == 0)
             {
                 liczby[i]=0;//bo sinus powoduje ze w tablicy liczb pojawia sie puste miejsce
@@ -194,7 +194,7 @@ int interpreter (char napis[], int dlugoscnapis)
     for(int i=0; i<licznik_znakow; i++)
     {
         if(znaki[i]=='w')
-        {//zabezpiczenie bo ************* przy jego braku w sensie cos(90) + 180k
+        {
             if( (((int)(liczby[i+1])-90) %180 ) == 0)
             {
                 liczby[i]=0;//bo sinus powoduje ze w tablicy liczb pojawia sie puste miejsce
@@ -241,7 +241,7 @@ int interpreter (char napis[], int dlugoscnapis)
         {
             if( (((int)(liczby[i+1]) + 90) %180 )== 0)//asymptota
             {
-                //czuszczenie tablicy znakow i napisu
+                //czyszczenie tablicy znakow i napisu
                 for(int i=0; i<n; i++)
                 {
                     napis[i]=0;
@@ -301,7 +301,7 @@ int interpreter (char napis[], int dlugoscnapis)
         {
             if( ((int)(liczby[i+1]) %180 )== 0)//asymptota
             {
-                //czuszczenie tablicy znakow i napisu
+                //czyszczenie tablicy znakow i napisu
                 for(int i=0; i<n; i++)
                 {
                     napis[i]=0;
@@ -313,12 +313,11 @@ int interpreter (char napis[], int dlugoscnapis)
                 napis[3]='o';
                 napis[4]='r';
                 return 5;
-
             }
             else
             {
                 liczby[i]=(cos(liczby[i+1]*M_PI/180.0f))/(sin(liczby[i+1]*M_PI/180.0f));
-                if(liczby[i]<0.001 || liczby[i]>1000)
+                if(liczby[i]<0.00001)
                     liczby[i]=0;
 
                 for(int x=i+1; x<licznik_liczb; x++)
@@ -340,7 +339,7 @@ int interpreter (char napis[], int dlugoscnapis)
     // PIERWIASTKOWANIE
     for(int i=0; i<licznik_znakow; i++)
     {
-    	if(znaki[i]==pierwiastek)//moze 124, 162, 218, 232
+    	if(znaki[i]==pierwiastek)
     	{
     		liczby[i]=sqrt( liczby[i+1] );
     		for(int j=i+1; j<licznik_liczb; j++)
