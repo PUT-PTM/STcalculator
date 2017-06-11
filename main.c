@@ -70,9 +70,13 @@ int main(void)
 	stmkonf_NVIC_timera(TIM3, TIM3_IRQn);
 	stmwlacz_timer(TIM3);
 
-	stmkonf_timera(TIM4, 839, 99);//timer od regulacji jasnosci/kontrastu wyswietlacza
+	stmkonf_timera(TIM4, 839, 99);//timer od regulacji jasnosci wyswietlacza
 	stmkonf_PWM_i_PB8_dla_TIM4_CH3(99, 50);
 	stmwlacz_timer(TIM4);
+
+	stmkonf_timera(TIM3, 839, 49);//timer od regulacji kontrastu znakow
+	stmkonf_PWM_i_PB0_dla_TIM3_CH3(49, 30);
+	stmwlacz_timer(TIM3);
 
 	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
 	stmkonf_NVIC_timera(TIM5, TIM5_IRQn);
@@ -95,7 +99,7 @@ int main(void)
     TM_HD44780_CursorOn();
 
     //Enable cursor blinking
-    TM_HD44780_BlinkOn();
+    TM_HD44780_BlinkOff();
 
     while (1)
     {}
