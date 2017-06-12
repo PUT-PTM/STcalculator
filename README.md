@@ -15,14 +15,17 @@ The heart of this device is microcontroller STM32F4 Discovery. We use LCD HD4478
 Software that we use is CooCox CoIDE Version: 1.7.8
 
 ## How to run
-You should upload the program to the STM32F4 board eg in Coocox.
+You should upload the program to the STM32F4 board eg using Coocox.
 
 ## How to compile
-There are no any special things to do. Just copy the project.
+Just copy the project, compile and upload using Coocox.
 
 ## Future improvements
 There is no any bugs. There is a 0.00001 precision.
-You can add brackets for example to calculate something like this(2+2)*2=8 or binary<->decimal conversion.
+You can add:
+- brackets for example to calculate something like (2+2)*2=8
+- binary<->decimal conversion.
+If it's possible, use sprintf() instead of manual float->char array conversion.
 
 ## Attributions
 To handle with printing in LCD we use graphic library https://github.com/emusan/stm32f4-charlcd
