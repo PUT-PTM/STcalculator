@@ -395,11 +395,12 @@ int interpreter (char napis[], int dlugoscnapis)
             i--;
         }
     }
+    //dzielenie
     for(int i = 0; i< licznik_znakow; i++)
     {
         if(znaki[i] == '/')
         {
-            liczby[i+1]/=liczby[i];
+            liczby[i+1]=liczby[i]/liczby[i+1];
     		for(int j=i; j<licznik_liczb; j++)
     		{
     			liczby[j]=liczby[j+1];
@@ -413,6 +414,7 @@ int interpreter (char napis[], int dlugoscnapis)
             i--;
         }
     }
+    //dodawanie
     for(int i = 0; i< licznik_znakow; i++)
     {
         if(znaki[i] == '+')
@@ -431,7 +433,7 @@ int interpreter (char napis[], int dlugoscnapis)
             i--;
         }
     }
-    //szukamy odejmowania
+    //odejmowanie
     for(int i = 0; i< licznik_znakow; i++)
     {
         if(znaki[i] == '-')
@@ -462,7 +464,7 @@ int interpreter (char napis[], int dlugoscnapis)
     char wynikchar1[29]={0};//bedzie reprezentowac czesc calkowita
     //zapisanie wyniku jako tablica char
 
-       int czy_ujemna=0;
+    int czy_ujemna=0;
     if(wynikdouble<0)//jesli liczba ujemna to zamieniamy na dodatnia
     {
         czy_ujemna=1;

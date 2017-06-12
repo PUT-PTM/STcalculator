@@ -77,7 +77,7 @@ int main(void)
 	stmwlacz_timer(TIM4);
 
 	stmkonf_timera(TIM3, 839, contrast_period);//timer od regulacji kontrastu znakow
-	stmkonf_PWM_i_PB0_dla_TIM3_CH3(contrast_period, 30);
+	stmkonf_PWM_i_PB0_dla_TIM3_CH3(contrast_period, 0);
 	stmwlacz_timer(TIM3);
 
 	stmkonf_timera(TIM5, 8399, 1000);//redukcja drgan stykow
