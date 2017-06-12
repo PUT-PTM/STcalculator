@@ -1,9 +1,9 @@
-README
+# STCalculator
 
-Overview
+## Overview
 This project was made on Poznan University of Technology. We decided to make calculator, it is also called calculating machine. It's a small electronic&mechanical device that performs calculations, requiring manual action for each individual opertion.
 
-Description
+## Description
 This project consists of:
 STM32F407VG microcontroller,
 HD44780 display,
@@ -11,28 +11,28 @@ Membrane 4x4 Matrix Array keyboard
 
 The heart of this device is microcontroller STM32F4 Discovery. We use LCD HD44780 to display numbers and everything else. To enter numbers we use a membrane keypad.
 
-Tools
+## Tools
 Software that we use is CooCox CoIDE Version: 1.7.8
 
-How to run
+## How to run
 You should upload the program to the STM32F4 board eg in Coocox.
 
-How to compile
+## How to compile
 There are no any special things to do. Just copy the project.
 
-Future improvements
+## Future improvements
 There is no any bugs. There is a 0.00001 precision.
 You can add brackets for example to calculate something like this(2+2)*2=8 or binary<->decimal conversion.
 
-Attributions
+## Attributions
 To handle with printing in LCD we use graphic library https://github.com/emusan/stm32f4-charlcd
 
-License
+## License
 You are using this project at your own risk.
 Authors are not responsible for damage caused by the project.
 MIT
 
-Credits
+## Credits
 Natalia Popielarz natalia.popielarz@put.poznan.pl
 Piotr Wołyński piotr.wolynski@put.poznan.pl
 
